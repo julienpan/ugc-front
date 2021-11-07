@@ -1,0 +1,67 @@
+<ion-header [translucent]="true" class="ion-hide-md-up">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <div id="logo">
+        <img src="./assets/icon/ugc.png">
+      </div>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-menu-button class="ion-hide-md-up"></ion-menu-button>
+    </ion-buttons>
+    <div id="segment">
+      <ion-segment (ionChange)="segmentChanged($event)">
+        <ion-segment-button value="films">
+          <ion-label>Films</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="cinemas">
+          <ion-label>Cinémas</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+  </ion-toolbar>
+
+  <ion-toolbar color="medium" class="ion-hide-md-down">
+    <ion-button fill="clear"><b>Cinémas</b></ion-button>
+    <ion-button fill="clear"><b>Films</b></ion-button>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-header [translucent]="true" class="ion-hide-md-down">
+  <ion-toolbar>
+    <ion-buttons slot="start" routerLink="/home/accueil">
+      <div id="logo">
+        <img src="./assets/icon/ugc.png">
+      </div>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button color="primary">
+        <b>Rechercher</b>
+        <ion-icon name="search"></ion-icon>
+      </ion-button>
+      <ion-button color="primary" routerLink="/home/login">
+        <b>Mon Compte</b>
+        <ion-icon name="person"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar color="medium">
+    <ion-buttons slot="start">
+      <ion-button color="primary">Cinémas</ion-button>
+      <ion-button color="primary">Films</ion-button>
+      <ion-button color="primary">News</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <app-login *ngIf="menu == login"></app-login>
+  <!-- <ion-slides pager="true">
+    <ion-slide>
+      <img src="./assets/icon/ugc.png">
+    </ion-slide>
+  </ion-slides> -->
+</ion-content>

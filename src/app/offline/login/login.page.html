@@ -1,0 +1,26 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content>
+
+
+  <ion-input [(ngModel)]="user.email" placeholder="Enter une adresse-mail"></ion-input>
+  <ion-input [(ngModel)]="user.password" placeholder="Enter un mot de passe"></ion-input>
+
+  <ion-button (click)="add()">Inscription</ion-button>
+
+  <ion-card *ngFor="let item of (users | async)">
+    <ion-card-content>
+      <ion-text>{{item.email}}</ion-text>
+      <br>
+      <ion-text>{{item.password}}</ion-text>
+      <br>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

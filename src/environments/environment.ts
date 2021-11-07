@@ -1,9 +1,20 @@
+/* eslint-disable @typescript-eslint/quotes */
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+
+  firebaseConfig: {
+    apiKey: "AIzaSyBcykMGEfg_1HjhCob9lLEnNa9lMcjq9mg",
+    authDomain: "ugc-front.firebaseapp.com",
+    databaseURL: "https://ugc-front-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "ugc-front",
+    storageBucket: "ugc-front.appspot.com",
+    messagingSenderId: "745874070541",
+    appId: "1:745874070541:web:48abe8bfd8067bfd33c944"
+  }
 };
 
 /*
