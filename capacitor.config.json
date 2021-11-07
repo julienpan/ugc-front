@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "ugc-front",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

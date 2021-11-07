@@ -1,0 +1,7 @@
+{
+  "name": "ugc-front",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
