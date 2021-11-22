@@ -26,6 +26,4 @@ export class HomePage implements OnInit {
     console.log($event);
     this.segment = $event.detail.value;
   }
-
-
 }
