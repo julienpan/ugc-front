@@ -1,26 +1,107 @@
-<!-- <ion-header>
+<ion-header>
   <ion-toolbar>
+
+    <div class="titleHeader">
+      <ion-text>Connexion</ion-text>
+    </div>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>login</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
   </ion-toolbar>
-</ion-header> -->
+</ion-header>
 
 <ion-content>
 
+  <div id="segment">
+    <ion-segment (ionChange)="segmentChanged($event)" [value]="segmentForm">
+      <ion-segment-button [value]="form[0].value" [disabled]="form[0].disable">
+        <ion-label>Je m'identifie</ion-label>
+      </ion-segment-button>
+      <ion-segment-button [value]="form[1].value" [disabled]="form[1].disable">
+        <ion-label>Je m'inscris</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
 
-  <ion-input [(ngModel)]="user.email" placeholder="Enter une adresse-mail"></ion-input>
-  <ion-input [(ngModel)]="user.password" placeholder="Enter un mot de passe"></ion-input>
+  <div *ngIf="segmentForm == 'login'" id="form">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating"><b>Email</b></ion-label>
+        <ion-input placeholder="Entrer votre email"></ion-input>
+      </ion-item>
 
-  <ion-button (click)="add()">Inscription</ion-button>
+      <ion-item>
+        <ion-label position="floating"><b>Mot de passe</b></ion-label>
+        <ion-input type="password" placeholder="Entrer votre email"></ion-input>
+      </ion-item>
+    </ion-list>
 
-  <ion-card *ngFor="let item of (users | async)">
+    <div id="btn">
+      <ion-button color="primary">Je me connecte</ion-button>
+    </div>
+  </div>
+
+  <div *ngIf="segmentForm == 'register'" id="form">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating"><b>Nom</b></ion-label>
+        <ion-input [(ngModel)]="user['lastname']" placeholder="Enter votre nom"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating"><b>Prenom</b></ion-label>
+        <ion-input [(ngModel)]="user['firstname']" placeholder="Enter votre prenom"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating"><b>Email</b></ion-label>
+        <ion-input [(ngModel)]="user['email']" placeholder="Enter votre email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating"><b>Identifiant</b></ion-label>
+        <ion-input [(ngModel)]="user['login']" placeholder="Enter un identifiant"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating"><b>Mot de passe</b></ion-label>
+        <ion-input [(ngModel)]="user['password']" placeholder="Enter un mot de passe"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label><b>Genres et préférences</b></ion-label>
+        <ion-select 
+          multiple="true" 
+          [value]="prefSelected" 
+          cancelText="Annuler" 
+          okText="Valider" 
+          slot="end"
+          (ionChange)="changePref($event)">
+          <ion-select-option *ngFor="let p of pref" [value]="p.id">{{p.prefName}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+    <div id="btn">
+      <ion-button color="primary">Je m'inscris</ion-button>
+    </div>
+
+  </div>
+
+  <!-- <ion-button (click)="add()">Inscription</ion-button> -->
+
+  <!-- <ion-card *ngFor="let item of (client | async)">
     <ion-card-content>
+      <ion-text>{{item.lastname}}</ion-text>
+      <br>
+      <ion-text>{{item.firstname}}</ion-text>
+      <br>
+      <ion-text>{{item.login}}</ion-text>
+      <br>
       <ion-text>{{item.email}}</ion-text>
       <br>
-      <ion-text>{{item.password}}</ion-text>
+      <ion-text>{{item.preferences}}</ion-text>
       <br>
     </ion-card-content>
-  </ion-card>
+  </ion-card> -->
 </ion-content>

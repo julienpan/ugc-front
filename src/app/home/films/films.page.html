@@ -1,0 +1,113 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Les films</ion-title>
+
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="container">
+    <div id="card">
+      <ion-card>
+        <ion-card-header>
+          <ion-text>Les séances dans mon cinéma</ion-text>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-button (click)="openModalCinema()">
+            Choisir mon cinéma
+            <ion-icon name="chevron-down"></ion-icon>
+          </ion-button>
+          <ion-button>
+            <ion-icon name="location"></ion-icon>
+            A proximité
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  
+    <div id="btn">
+      <ion-button fill="clear">
+        <ion-icon name="search"></ion-icon>
+        Rechercher un film
+      </ion-button>
+  
+      <ion-button fill="clear">
+        <ion-icon name="options"></ion-icon>
+        Filtrer / Trier
+      </ion-button>
+    </div>
+
+    <div id="section">
+      <ion-item lines="none">
+        <ion-text>Nouveautés</ion-text>
+        <ion-button slot="end" fill="clear">Tout voir</ion-button>
+      </ion-item>
+    </div>
+
+    <div id="newMovie">
+      <ion-slides [options]="slideOpts">
+        <ion-slide>
+          <div id="movie">
+            <div id="image">
+            </div>
+            <div id="title">
+              <ion-text>TITRE</ion-text>
+            </div>
+          </div>
+        </ion-slide>
+
+        <ion-slide>
+          <div id="movie">
+            <div id="image">
+            </div>
+            <div id="title">
+              <ion-text>TITRE</ion-text>
+            </div>
+          </div>
+        </ion-slide>
+
+        <ion-slide>
+          <div id="movie">
+            <div id="image">
+            </div>
+            <div id="title">
+              <ion-text>TITRE</ion-text>
+            </div>
+          </div>
+        </ion-slide>
+
+        <ion-slide>
+          <div id="movie">
+            <div id="image">
+            </div>
+            <div id="title">
+              <ion-text>TITRE</ion-text>
+            </div>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+
+
+    <div id="section">
+      <ion-item lines="none">
+        <ion-text>A l'affiche</ion-text>
+        <ion-button slot="end" fill="clear">Tout voir</ion-button>
+      </ion-item>
+    </div>
+
+    <div id="section">
+      <ion-item lines="none">
+        <ion-text>Avant-premières</ion-text>
+        <ion-button slot="end" fill="clear">Tout voir</ion-button>
+      </ion-item>
+    </div>
+
+
+
+
+  </div>
+</ion-content>

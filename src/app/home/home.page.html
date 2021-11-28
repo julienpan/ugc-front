@@ -20,10 +20,10 @@
     </div>
   </ion-toolbar>
 
-  <ion-toolbar color="medium" class="ion-hide-md-down">
+  <!-- <ion-toolbar color="medium" class="ion-hide-md-up">
     <ion-button fill="clear"><b>Cinémas</b></ion-button>
     <ion-button fill="clear"><b>Films</b></ion-button>
-  </ion-toolbar>
+  </ion-toolbar> -->
 </ion-header>
 
 
@@ -49,8 +49,8 @@
 
   <ion-toolbar color="medium">
     <ion-buttons slot="start">
-      <ion-button color="primary">Cinémas</ion-button>
-      <ion-button color="primary">Films</ion-button>
+      <ion-button color="primary" routerLink="/home/accueil/cinema">Cinémas</ion-button>
+      <ion-button color="primary" routerLink="/home/accueil/films">Films</ion-button>
       <ion-button color="primary">News</ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -58,7 +58,7 @@
 
 <ion-content [fullscreen]="true">
 
-  <app-login *ngIf="menu == login"></app-login>
+  <!-- <app-login *ngIf="menu == 'login'"></app-login> -->
   <!-- <ion-slides pager="true">
     <ion-slide>
       <img src="./assets/icon/ugc.png">

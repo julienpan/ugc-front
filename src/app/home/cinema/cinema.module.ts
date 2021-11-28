@@ -4,18 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { HomePageRoutingModule } from './home-routing.module';
+import { CinemaPageRoutingModule } from './cinema-routing.module';
 
-import { HomePage } from './home.page';
-
+import { CinemaPage } from './cinema.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule,
+    CinemaPageRoutingModule
   ],
-  declarations: [HomePage]
+  declarations: [CinemaPage]
 })
-export class HomePageModule {}
+export class CinemaPageModule {}

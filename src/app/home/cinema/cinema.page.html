@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Les cinémas</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-segment (ionChange)="segmentChanged($event)" [value]="segmentForm">
+    <ion-segment-button [value]="form[0].value" [disabled]="form[0].disable">
+      <ion-label>Tous</ion-label>
+    </ion-segment-button>
+    <ion-segment-button [value]="form[1].value" [disabled]="form[1].disable">
+      <ion-label>Paris</ion-label>
+    </ion-segment-button>
+    <ion-segment-button [value]="form[2].value" [disabled]="form[2].disable">
+      <ion-label>Bordeaux</ion-label>
+    </ion-segment-button>
+    <ion-segment-button [value]="form[3].value" [disabled]="form[3].disable">
+      <ion-label>Hauts-de-France</ion-label>
+    </ion-segment-button>
+    <ion-segment-button [value]="form[4].value" [disabled]="form[4].disable">
+      <ion-label>Lyon</ion-label>
+    </ion-segment-button>
+    <ion-segment-button [value]="form[5].value" [disabled]="form[5].disable">
+      <ion-label>Nantes</ion-label>
+    </ion-segment-button>
+    <ion-segment-button [value]="form[6].value" [disabled]="form[6].disable">
+      <ion-label>Toulouse</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-list>
+    <ion-grid>
+      <ion-row style="height: 250px; border-bottom: 1px solid black;">
+        <ion-col size="4">
+          <div style="background: black; width: 100%; height: 100%;"></div>
+        </ion-col>
+        <ion-col>
+          <div id="info">
+            <ion-title>NOM DU CINEMA</ion-title>
+            <ion-text color="medium">Nombres de films et avants-premires</ion-text>
+            <ion-text>Adresse</ion-text>
+            <ion-text>Code postal VILLE</ion-text>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row style="height: 250px; border-bottom: 1px solid black;">
+        <ion-col size="4">
+          <div style="background: black; width: 100%; height: 100%;"></div>
+        </ion-col>
+        <ion-col>
+          <div id="info">
+            <ion-title>NOM DU CINEMA</ion-title>
+            <ion-text color="medium">Nombres de films et avants-premires</ion-text>
+            <ion-text>Adresse</ion-text>
+            <ion-text>Code postal VILLE</ion-text>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row style="height: 250px; border-bottom: 1px solid black;">
+        <ion-col size="4">
+          <div style="background: black; width: 100%; height: 100%;"></div>
+        </ion-col>
+        <ion-col>
+          <div id="info">
+            <ion-title>NOM DU CINEMA</ion-title>
+            <ion-text color="medium">Nombres de films et avants-premires</ion-text>
+            <ion-text>Adresse</ion-text>
+            <ion-text>Code postal VILLE</ion-text>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row style="height: 250px; border-bottom: 1px solid black;">
+        <ion-col size="4">
+          <div style="background: black; width: 100%; height: 100%;"></div>
+        </ion-col>
+        <ion-col>
+          <div id="info">
+            <ion-title>NOM DU CINEMA</ion-title>
+            <ion-text color="medium">Nombres de films et avants-premires</ion-text>
+            <ion-text>Adresse</ion-text>
+            <ion-text>Code postal VILLE</ion-text>
+          </div>
+        </ion-col>
+      </ion-row>
+
+
+    </ion-grid>
+  </ion-list>
+</ion-content>

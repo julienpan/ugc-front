@@ -15,6 +15,10 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./offline/login/login.module').then( m => m.LoginPageModule)
   },
+  {
+    path: 'modal-cinema',
+    loadChildren: () => import('./components/modal-cinema/modal-cinema.module').then( m => m.ModalCinemaPageModule)
+  },
   // {
   //   path: 'home',
   //   loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)

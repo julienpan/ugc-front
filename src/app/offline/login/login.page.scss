@@ -1,0 +1,16 @@
+#segment {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px;
+
+    ion-list {
+        width: 600px;
+    }
+}

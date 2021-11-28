@@ -24,3 +24,10 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.titleHeader {
+    ion-text {
+        font-size: 20px;
+        padding-left: 10px;
+    }
+}

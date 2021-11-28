@@ -22,7 +22,7 @@ export class HomePage implements OnInit {
     this.menu = this.activatedRoute.snapshot.paramMap.get('id');
   }
 
-  segmentChange($event): void {
+  segmentChanged($event): void {
     console.log($event);
     this.segment = $event.detail.value;
   }
