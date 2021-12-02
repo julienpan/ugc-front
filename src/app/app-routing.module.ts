@@ -19,6 +19,10 @@ const routes: Routes = [
     path: 'modal-cinema',
     loadChildren: () => import('./components/modal-cinema/modal-cinema.module').then( m => m.ModalCinemaPageModule)
   },
+  {
+    path: 'modal-add-cinema',
+    loadChildren: () => import('./components/modal-add-cinema/modal-add-cinema.module').then( m => m.ModalAddCinemaPageModule)
+  },
   // {
   //   path: 'home',
   //   loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)

@@ -28,9 +28,6 @@ export class LoginPage implements OnInit {
     { value: "register", disable: false },
   ];
 
-  usersRef: AngularFireList<any>;
-  users: Observable<any[]>;
-
   clientRef: AngularFirestoreCollection<any>;
   client: Observable<any[]>;
 
