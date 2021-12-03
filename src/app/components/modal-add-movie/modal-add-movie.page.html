@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Ajouter un film</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating"><b>Nom du film</b></ion-label>
+      <ion-input [(ngModel)]="movieForm.name"
+        placeholder="Entrer le nom du film"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating"><b>Nom du producteur</b></ion-label>
+      <ion-input [(ngModel)]="movieForm.producerName"
+        placeholder="Entrer le nom du film"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating"><b>Date de sortie</b></ion-label>
+      <ion-input [(ngModel)]="movieForm.releaseDate"
+        placeholder="Entrer le nom du film"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating"><b>La durée</b></ion-label>
+      <ion-input [(ngModel)]="movieForm.duration"
+        placeholder="Entrer le nom du film"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating"><b>Synopsis</b></ion-label>
+      <ion-input [(ngModel)]="movieForm.synopsis"
+        placeholder="Entrer le nom du film"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating"><b>Lien du trailer</b></ion-label>
+      <ion-input [(ngModel)]="movieForm.trailer"
+        placeholder="Entrer le nom du film"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating"><b>Liste des cinémas</b></ion-label>
+      <ion-select>
+        <ion-select-option></ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-button expand="full" style="margin-bottom: 10px;" (click)="addMovie()">Enregistrer</ion-button>
+</ion-footer>

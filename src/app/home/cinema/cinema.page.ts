@@ -56,43 +56,40 @@ export class CinemaPage implements OnInit {
 
   cinemaList = [
     {
-      nom: '',
+      name: '',
       address: {
+        fullAddress: '',
         street: '',
         street_2: '',
         city: '',
+        country: '',
         zipCode: '',
+        latitude: 0,
+        longitude: 0,
       },
-      fullAddress: '',
-      lat: 0,
-      lng: 0,
     },
   ];
+
 
   constructor(
     private firestore: AngularFirestore,
     private modalCtrl: ModalController) {}
 
   ngOnInit() {
-    this.refresh();
-  }
-
-  refresh() {
     this.cinemaList = [];
     this.getAllCinema();
   }
 
+
   getAllCinema() {
-    this.cinema = this.firestore.collection('cinema').valueChanges();
+    this.cinema = this.firestore.collection('cinema').valueChanges({idField: 'customId'});
+
     this.cinema.forEach((r) => {
       r.forEach((r2) => {
-        // console.log(r2);
+        console.log('ID : ', r2.customId);
         this.cinemaList.push({
-          nom: r2.nom,
+          name: r2.name,
           address: r2.address,
-          fullAddress: r2.fullAddress,
-          lat: 0,
-          lng: 0,
         });
       });
     });
@@ -108,8 +105,6 @@ export class CinemaPage implements OnInit {
   }
 
   segmentChanged($event) {
-    this.refresh();
-    // console.log($event);
     this.segmentForm = $event.detail.value;
   }
 }
