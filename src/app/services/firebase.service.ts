@@ -31,5 +31,8 @@ export class FirebaseService {
   logout() {
     this.firebaseAuth.signOut();
     localStorage.removeItem('user');
+    if(localStorage.getItem('admin') != null) {
+      localStorage.removeItem('admin');
+    }
   }
 }

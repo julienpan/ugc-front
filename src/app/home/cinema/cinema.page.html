@@ -4,7 +4,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="home/accueil"></ion-back-button>
     </ion-buttons>
-    <ion-buttons slot="end">
+    <ion-buttons slot="end" *ngIf="isAdmin">
       <ion-button fill="outline" color="primary" (click)="openModalAddCinema()">Ajouter un cinéma</ion-button>
     </ion-buttons>
   </ion-toolbar>

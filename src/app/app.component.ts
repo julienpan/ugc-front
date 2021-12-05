@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController, Platform } from '@ionic/angular';
+import { AdminService } from './services/admin.service';
 import { FirebaseService } from './services/firebase.service';
 // import { initializeApp } from "firebase/app";
 
@@ -22,6 +23,7 @@ export class AppComponent implements OnInit {
     private platform: Platform,
     private menu: MenuController,
     private firebaseService: FirebaseService,
+    private adminService: AdminService
   ) {
     this.initializeApp();
   }
@@ -29,6 +31,15 @@ export class AppComponent implements OnInit {
   initializeApp() {
     this.platform.ready().then(() => {
       console.log('APP READY !');
+      if(localStorage.getItem('user') != null) {
+        if(this.adminService.checkAdmin(localStorage.getItem('user'))) {
+          console.log('Connecté en tant que administrateur')
+          localStorage.setItem('admin', 'true');
+          console.log(localStorage.getItem('admin'))
+        }
+      } else {
+        console.log('Non connecté')
+      }
     });
   }
 

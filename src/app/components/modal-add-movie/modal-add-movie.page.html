@@ -1,6 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Ajouter un film</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="danger" (click)="dismissModal()">Fermer</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -17,35 +20,48 @@
     <ion-item>
       <ion-label position="floating"><b>Nom du producteur</b></ion-label>
       <ion-input [(ngModel)]="movieForm.producerName"
-        placeholder="Entrer le nom du film"
+        placeholder="Entrer le nom du producteur"
       ></ion-input>
     </ion-item>
 
-    <ion-item>
+    <!-- <ion-item>
       <ion-label position="floating"><b>Date de sortie</b></ion-label>
       <ion-input [(ngModel)]="movieForm.releaseDate"
         placeholder="Entrer le nom du film"
       ></ion-input>
+    </ion-item> -->
+
+    <ion-item>
+      <ion-label position="floating">Date de sortie</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Selectionner une date" [(ngModel)]="movieForm.releaseDate"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">La durée</ion-label>
+      <ion-datetime displayFormat="HH:mm" placeholder="Selectionner la durée" [(ngModel)]="movieForm.duration"></ion-datetime>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating"><b>La durée</b></ion-label>
       <ion-input [(ngModel)]="movieForm.duration"
-        placeholder="Entrer le nom du film"
+        placeholder="Entrer la durée du film"
       ></ion-input>
     </ion-item>
+
+
+
 
     <ion-item>
       <ion-label position="floating"><b>Synopsis</b></ion-label>
       <ion-input [(ngModel)]="movieForm.synopsis"
-        placeholder="Entrer le nom du film"
+        placeholder="Ajouter un résumé"
       ></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating"><b>Lien du trailer</b></ion-label>
       <ion-input [(ngModel)]="movieForm.trailer"
-        placeholder="Entrer le nom du film"
+        placeholder="Insérer un lien vers le trailer"
       ></ion-input>
     </ion-item>
 

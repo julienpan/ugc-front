@@ -3,6 +3,8 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/comp
 import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { ModalAddMoviePage } from 'src/app/components/modal-add-movie/modal-add-movie.page';
+import { ModalCinemaPage } from 'src/app/components/modal-cinema/modal-cinema.page';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-films',
@@ -30,6 +32,8 @@ export class FilmsPage implements OnInit {
     cinemaList: [],
   }]
 
+  isAdmin : boolean = false;
+
   constructor(
     private modalCtrl: ModalController,
     private firestore: AngularFirestore,
@@ -38,18 +42,28 @@ export class FilmsPage implements OnInit {
   ngOnInit() {
     this.movieList = [];
     this.getAllMovies();
+
+    if(localStorage.getItem('admin') != null) {
+      this.isAdmin = true;
+      console.log('Mode admin');
+    } else {
+      this.isAdmin = false;
+      console.log('Mode User');
+    }
+
   }
 
   refresh() {
+    this.movieList = [];
     this.getAllMovies();
   }
 
   getAllMovies() {
     this.movieList = [];
-    this.movie = this.firestore.collection('movie').valueChanges({idField: 'customId'});
+    this.movie = this.firestore.collection('movie').valueChanges({idField: 'customId'}).pipe(take(1))
     this.movie.forEach((r) => {
       r.forEach((r2) => {
-        console.log('ID : ', r2.customId);
+        // console.log('ID : ', r2.customId);
         this.movieList.push({
           name: r2.name,
           releaseDate: r2.releaseDate,
@@ -69,9 +83,7 @@ export class FilmsPage implements OnInit {
   }
 
   watchTrailer(link) {
-    console.log(link);
     window.open(link, "_blank");
-    // window.location.href = link;
   }
 
 
@@ -79,11 +91,16 @@ export class FilmsPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: ModalAddMoviePage,
     });
-    
     modal.onDidDismiss().then(() => {
       this.refresh();
     })
+    return await modal.present();
+  }
 
+  async openModalCinema() {
+    const modal = await this.modalCtrl.create({
+      component: ModalCinemaPage,
+    });
     return await modal.present();
   }
 

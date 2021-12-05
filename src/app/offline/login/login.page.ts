@@ -1,6 +1,6 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { AngularFireList, AngularFireDatabase } from '@angular/fire/compat/database';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AngularFirestoreModule,
         AngularFirestoreCollection, 
@@ -68,7 +68,9 @@ export class LoginPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     public afDB: AngularFireDatabase,
     public firestore: AngularFirestore,
-    public firebaseService: FirebaseService) { }
+    public firebaseService: FirebaseService,
+    private router: Router,
+    ) { }
 
   ngOnInit() {
     if(localStorage.getItem('user') !== null) {
@@ -84,6 +86,9 @@ export class LoginPage implements OnInit {
     await this.firebaseService.register(email, password);
     if(this.firebaseService.isLoggedIn) {
       this.isSignedIn = true;
+      console.log('Connecté');
+      // this.router.navigateByUrl('/home/accueil');
+      window.location.href = './';
     } else {
       this.isSignedIn = false;
     }
@@ -94,7 +99,10 @@ export class LoginPage implements OnInit {
     await this.firebaseService.login(email, password);
     if(this.firebaseService.isLoggedIn) {
       this.isSignedIn = true;
+      // this.router.navigateByUrl('/home/accueil');
+      window.location.href = './';
       console.log('Connecté');
+      
     } else {
       this.isSignedIn = false;
     }

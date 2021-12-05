@@ -51,12 +51,15 @@ export class ModalAddMoviePage implements OnInit {
   cinemaSelected = [];
   genreSelected = [];
 
+  currentDate : any;
+
   constructor(
     private modalCtrl: ModalController,
     private firestore: AngularFirestore,
   ) { }
 
   ngOnInit() {
+
     this.cinemaList = [];
     this.getAllCinema();
     this.getAllGenre();
@@ -67,7 +70,7 @@ export class ModalAddMoviePage implements OnInit {
     this.cinema = this.firestore.collection('cinema').valueChanges({idField: 'customId'});
     this.cinema.forEach((r) => {
       r.forEach((r2) => {
-        console.log('ID : ', r2.customId);
+        // console.log('ID : ', r2.customId);
         this.cinemaList.push({
           name: r2.name,
           address: r2.address,
@@ -92,9 +95,10 @@ export class ModalAddMoviePage implements OnInit {
     console.log('GENRELIST : ', this.genreList);
   }
 
-
-
   addMovie() {
+
+    this.movieForm.releaseDate = this.movieForm.releaseDate.substring(8, 10) + '/' + this.movieForm.releaseDate.substring(5, 7) + '/' + this.movieForm.releaseDate.substring(0, 4);
+
     const movieRef = this.firestore.collection('movie');
     movieRef.doc(this.movieForm.name).set({
       name: this.movieForm.name,

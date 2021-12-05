@@ -15,6 +15,8 @@ import {
 import { collection, doc, GeoPoint, setDoc, Firestore } from 'firebase/firestore';
 import { ModalController } from '@ionic/angular';
 import { ModalAddCinemaPage } from 'src/app/components/modal-add-cinema/modal-add-cinema.page';
+import { AdminService } from 'src/app/services/admin.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cinema',
@@ -70,20 +72,31 @@ export class CinemaPage implements OnInit {
     },
   ];
 
+  isAdmin : boolean = false
 
   constructor(
     private firestore: AngularFirestore,
-    private modalCtrl: ModalController) {}
+    private modalCtrl: ModalController,
+    private adminService: AdminService,
+    ) {}
 
   ngOnInit() {
     this.cinemaList = [];
     this.getAllCinema();
-  }
 
+    if(localStorage.getItem('admin') != null) {
+      this.isAdmin = true;
+      console.log('Mode admin');
+    } else {
+      this.isAdmin = false;
+      console.log('Mode User');
+    }
+
+  }
 
   getAllCinema() {
     this.cinemaList = [];
-    this.cinema = this.firestore.collection('cinema').valueChanges({idField: 'customId'});
+    this.cinema = this.firestore.collection('cinema').valueChanges({idField: 'customId'}).pipe(take(1))
     this.cinema.forEach((r) => {
       r.forEach((r2) => {
         console.log('ID : ', r2.customId);
