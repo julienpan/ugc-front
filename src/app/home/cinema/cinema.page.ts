@@ -82,8 +82,8 @@ export class CinemaPage implements OnInit {
 
 
   getAllCinema() {
+    this.cinemaList = [];
     this.cinema = this.firestore.collection('cinema').valueChanges({idField: 'customId'});
-
     this.cinema.forEach((r) => {
       r.forEach((r2) => {
         console.log('ID : ', r2.customId);
@@ -93,8 +93,8 @@ export class CinemaPage implements OnInit {
         });
       });
     });
-    this.cinemaList.pop();
-    // console.log('CINEMA LIST', this.cinemaList);
+    // this.cinemaList.pop();
+    console.log('CINEMA LIST', this.cinemaList);
   }
 
   async openModalAddCinema() {

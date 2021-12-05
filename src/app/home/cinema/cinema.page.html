@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-text style="font-size: 20px; font-weight: bold;" color="primary">Les cinémas</ion-text>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button defaultHref="home/accueil"></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button fill="outline" color="primary" (click)="openModalAddCinema()">Ajouter un cinéma</ion-button>
@@ -37,9 +37,29 @@
   </ion-segment>
 
   <ion-list>
+
+    <ion-grid *ngIf="segmentForm == 'tous'">
+      <ion-row style="height: 250px; border-bottom: 1px solid black;" *ngFor="let cinema of cinemaList">
+        <div style="display: flex; width: 100%;">
+          <ion-col size="4" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <img src="./assets/icon/ugc.png" alt="">
+            <!-- <div style="background: black; width: 100%; height: 100%;"></div> -->
+          </ion-col>
+          <ion-col>
+            <div id="info">
+              <ion-title>{{cinema.name}}</ion-title>
+              <!-- <ion-text color="medium">Nombres de films et avants-premires</ion-text> -->
+              <ion-text>{{cinema.address.fullAddress}}</ion-text>
+              <!-- <ion-text>Code postal VILLE</ion-text> -->
+            </div>
+          </ion-col>
+        </div>
+      </ion-row>
+    </ion-grid>
+
     <ion-grid *ngIf="segmentForm == 'paris'">
       <ion-row style="height: 250px; border-bottom: 1px solid black;" *ngFor="let cinema of cinemaList">
-        <div *ngIf="cinema.address.city == 'Paris'" style="display: flex; width: 100%;">
+        <div *ngIf="cinema.address.city.includes('Paris')" style="display: flex; width: 100%;">
           <ion-col size="4" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
             <img src="./assets/icon/ugc.png" alt="">
             <!-- <div style="background: black; width: 100%; height: 100%;"></div> -->

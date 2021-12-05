@@ -14,7 +14,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="!isSignedIn">
 
   <div id="segment">
     <ion-segment (ionChange)="segmentChanged($event)" [value]="segmentForm">
@@ -32,20 +32,19 @@
       <ion-item>
         <ion-label position="floating"><b>Email</b></ion-label>
         <ion-input
-          type="email"
-          placeholder="Entrer votre email"
-          [pattern]="'[a-z0-9._%+-]{3,}@[a-z]{3,}([.]{1}[a-z]{2,}|[.]{1}[a-z]{2,}[.]{1}[a-z]{2,})'"
+        placeholder="Entrer votre email"
+        [(ngModel)]="loginEmail"
         ></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="floating"><b>Mot de passe</b></ion-label>
-        <ion-input type="password" placeholder="Entrer votre email"></ion-input>
+        <ion-input type="password" placeholder="Entrer votre mot de passe" [(ngModel)]="loginPassword"></ion-input>
       </ion-item>
     </ion-list>
 
     <div id="btn">
-      <ion-button color="primary">Je me connecte</ion-button>
+      <ion-button color="primary" (click)="onLogIn(loginEmail, loginPassword)">Je me connecte</ion-button>
     </div>
   </div>
 
@@ -53,27 +52,23 @@
     <ion-list>
       <ion-item>
         <ion-label position="floating"><b>Nom</b></ion-label>
-        <ion-input [(ngModel)]="user['lastname']" placeholder="Enter votre nom"></ion-input>
+        <ion-input [(ngModel)]="user.lastname" placeholder="Enter votre nom"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating"><b>Prenom</b></ion-label>
-        <ion-input [(ngModel)]="user['firstname']" placeholder="Enter votre prenom"></ion-input>
+        <ion-input [(ngModel)]="user.firstname" placeholder="Enter votre prenom"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating"><b>Email</b></ion-label>
         <ion-input 
-          [(ngModel)]="user['email']" 
+          [(ngModel)]="user.email" 
           placeholder="Enter votre email" 
           [pattern]="'[a-z0-9._%+-]{3,}@[a-z]{3,}([.]{1}[a-z]{2,}|[.]{1}[a-z]{2,}[.]{1}[a-z]{2,})'">
         </ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating"><b>Identifiant</b></ion-label>
-        <ion-input [(ngModel)]="user['login']" placeholder="Enter un identifiant"></ion-input>
-      </ion-item>
-      <ion-item>
         <ion-label position="floating"><b>Mot de passe</b></ion-label>
-        <ion-input [(ngModel)]="user['password']" placeholder="Enter un mot de passe"></ion-input>
+        <ion-input [(ngModel)]="user.password" placeholder="Enter un mot de passe"></ion-input>
       </ion-item>
   
       <ion-item>
@@ -91,7 +86,7 @@
     </ion-list>
 
     <div id="btn">
-      <ion-button color="primary">Je m'inscris</ion-button>
+      <ion-button color="primary" (click)="onRegister(user.email, user.password); add()">Je m'inscris</ion-button>
     </div>
 
   </div>
@@ -112,4 +107,10 @@
       <br>
     </ion-card-content>
   </ion-card> -->
+</ion-content>
+
+<ion-content *ngIf="isSignedIn">
+  <div>
+    <ion-text>Vous êtes connecté</ion-text>
+  </div>
 </ion-content>

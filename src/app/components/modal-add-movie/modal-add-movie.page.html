@@ -50,9 +50,16 @@
     </ion-item>
 
     <ion-item>
+      <ion-label position="floating"><b>Les genres</b></ion-label>
+      <ion-select multiple="true" cancelText="Retour" okText="Valider" [(ngModel)]="genreSelected" [value]="genreSelected">
+        <ion-select-option *ngFor="let genre of genreList" [value]="genre">{{genre}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
       <ion-label position="floating"><b>Liste des cinémas</b></ion-label>
-      <ion-select>
-        <ion-select-option></ion-select-option>
+      <ion-select multiple="true" cancelText="Retour" okText="Valider" [(ngModel)]="cinemaSelected" [value]="cinemaSelected">
+        <ion-select-option *ngFor="let cinema of cinemaList" [value]="cinema.name">{{cinema.name}}</ion-select-option>
       </ion-select>
     </ion-item>
   </ion-list>

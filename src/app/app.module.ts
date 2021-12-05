@@ -13,6 +13,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore/'; 
 import { LoginPageModule } from './offline/login/login.module';
 import { AgmCoreModule } from '@agm/core';
+import { FirebaseService } from './services/firebase.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,7 +32,7 @@ import { AgmCoreModule } from '@agm/core';
       libraries: ['places']
     }),
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, FirebaseService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-text style="font-size: 20px; font-weight: bold;" color="primary">Les films</ion-text>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button defaultHref="home/accueil"></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button fill="outline" color="primary" (click)="openModalAddMovie()">Ajouter un film</ion-button>
@@ -50,19 +50,14 @@
     </div>
 
     <div id="newMovie">
-      <ion-slides [options]="slideOpts">
+      <ion-slides [options]="slideOpts" pager="true">
         <ion-slide *ngFor="let movie of movieList">
           <div id="movie">
             <div id="image">
-              <img  style="width: 100%; height: 100%" src="./assets/icon/ugcMovie.jpeg">
               <div class="overlay">
-                <div class="trailer">
-                  <ion-button style="font-size: 10px" fill="clear" color="light">
-                    Voir la bande annonce
-                    <ion-icon name="play" color="light"></ion-icon>
-                  </ion-button>
-                </div>
+                <ion-button fill="clear" style="font-size: 10px;" color="light" (click)="watchTrailer(movie.trailer)">Voir la bande-annonce</ion-button>
               </div>
+              <img  style="width: 100%; height: 100%" src="./assets/icon/ugcMovie.jpeg">
             </div>
             <div id="title">
               <ion-text>{{movie.name}}</ion-text>

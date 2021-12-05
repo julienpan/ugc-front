@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { AngularFireList, AngularFireDatabase } from '@angular/fire/compat/database';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -8,6 +8,8 @@ import { AngularFirestoreModule,
         AngularFirestoreDocument, 
         AngularFirestore } from '@angular/fire/compat/firestore/'; 
 import { collection, doc, setDoc } from "firebase/firestore"; 
+import { FirebaseService } from 'src/app/services/firebase.service';
+import { EventEmitter } from 'stream';
 
 
 @Component({
@@ -31,14 +33,17 @@ export class LoginPage implements OnInit {
   clientRef: AngularFirestoreCollection<any>;
   client: Observable<any[]>;
 
-  user = [{
+  user = {
     email: '',
     firstname: '',
     lastname: '',
     login: '',
     password: '',
     preferences: [],
-  }]
+  }
+
+  loginEmail = '';
+  loginPassword = '';
 
   // 'animation','comedie','drame','documentaire','fantastique', 'science-fiction', 'horreur', 'policier', 'aventure'
   pref = [
@@ -54,46 +59,70 @@ export class LoginPage implements OnInit {
   ];
   prefSelected: [];
 
+  isSignedIn = false;
+
+  // @Output() isLogout = new EventEmitter<any>();
+
+
   constructor(    
     private activatedRoute: ActivatedRoute,
     public afDB: AngularFireDatabase,
-    public firestore: AngularFirestore) { }
+    public firestore: AngularFirestore,
+    public firebaseService: FirebaseService) { }
 
   ngOnInit() {
-    console.log('PREF:', this.pref);
-    // this.home = this.activatedRoute.snapshot.paramMap.get('id');
-    this.getUsers()
+    if(localStorage.getItem('user') !== null) {
+      console.log(localStorage);
+      this.isSignedIn = true;
+    } else {
+      this.isSignedIn = false;
+    }
+    // this.getUsers()
   }
 
-  getUsers() {
-    this.clientRef = this.firestore.collection('client');
-    this.client = this.clientRef.valueChanges();
-
-    this.client.forEach(r => {
-      r.forEach(r2 => {
-        if(r2.firstname == 'Julien') {
-          console.log('USER : ', r2);
-        }
-      })
-    })
-    // console.log(this.user);
+  async onRegister(email: string, password: string) {
+    await this.firebaseService.register(email, password);
+    if(this.firebaseService.isLoggedIn) {
+      this.isSignedIn = true;
+    } else {
+      this.isSignedIn = false;
+    }
   }
+
+  async onLogIn(email: string, password: string) {
+    // email = email.toString().toLowerCase().trim();
+    await this.firebaseService.login(email, password);
+    if(this.firebaseService.isLoggedIn) {
+      this.isSignedIn = true;
+      console.log('Connecté');
+    } else {
+      this.isSignedIn = false;
+    }
+  }
+
+  logout() {
+    this.firebaseService.logout();
+  }
+
+  // getUsers() {
+  //   this.clientRef = this.firestore.collection('users');
+  //   this.client = this.clientRef.valueChanges();
+  // }
 
   add() {
-    this.firestore.collection('client').add({
-      lastname: this.user['lastname'],
-      firstname: this.user['firstname'],
-      login: this.user['login'],
-      password: this.user['password'],
-      email: this.user['email'],
-      preferences: this.prefSelected,
-    })
+    const userRef = this.firestore.collection('users');
+    userRef.doc(this.user.email).set({
+      lastname: this.user.lastname,
+      firstname: this.user.firstname,
+      email: this.user.email,
+      password: this.user.password,
+      preferences: this.user.password
+    });
 
-    this.user['lastname'] = "";
-    this.user['firstname'] = "";
-    this.user['login'] = "";
-    this.user['password'] = "";
-    this.user['email'] = "";
+    this.user.lastname = "";
+    this.user.firstname = "";
+    this.user.password= "";
+    this.user.email = "";
     this.prefSelected = [];
   }
 

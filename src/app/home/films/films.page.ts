@@ -11,7 +11,7 @@ import { ModalAddMoviePage } from 'src/app/components/modal-add-movie/modal-add-
 })
 export class FilmsPage implements OnInit {
   slideOpts = {
-    slidesPerView: 3.1,
+    slidesPerView: 5.1,
   }
 
   movieRef: AngularFirestoreCollection<any>;
@@ -20,6 +20,7 @@ export class FilmsPage implements OnInit {
   movieList = [{
     name: '',
     releaseDate: '',
+    genres: [],
     note: 0,
     duration: '',
     producerName: '',
@@ -40,9 +41,11 @@ export class FilmsPage implements OnInit {
   }
 
   refresh() {
+    this.getAllMovies();
   }
 
   getAllMovies() {
+    this.movieList = [];
     this.movie = this.firestore.collection('movie').valueChanges({idField: 'customId'});
     this.movie.forEach((r) => {
       r.forEach((r2) => {
@@ -50,6 +53,7 @@ export class FilmsPage implements OnInit {
         this.movieList.push({
           name: r2.name,
           releaseDate: r2.releaseDate,
+          genres: r2.genres,
           note: r2.note,
           duration: r2.duration,
           producerName: r2.producerName,
@@ -64,11 +68,22 @@ export class FilmsPage implements OnInit {
     console.log('movie LIST', this.movieList);
   }
 
+  watchTrailer(link) {
+    console.log(link);
+    window.open(link, "_blank");
+    // window.location.href = link;
+  }
+
 
   async openModalAddMovie() {
     const modal = await this.modalCtrl.create({
       component: ModalAddMoviePage,
     });
+    
+    modal.onDidDismiss().then(() => {
+      this.refresh();
+    })
+
     return await modal.present();
   }
 
