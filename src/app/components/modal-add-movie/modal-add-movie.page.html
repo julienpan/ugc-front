@@ -38,15 +38,15 @@
 
     <ion-item>
       <ion-label position="floating">La durée</ion-label>
-      <ion-datetime displayFormat="HH:mm" placeholder="Selectionner la durée" [(ngModel)]="movieForm.duration"></ion-datetime>
+      <ion-datetime [min]="minTime" [max]="maxTime" pickerFormat="HH:mm" displayFormat="HH:mm" placeholder="Selectionner la durée" [(ngModel)]="currentDate" (ionChange)="onSelectDuration($event)"></ion-datetime>
     </ion-item>
 
-    <ion-item>
+    <!-- <ion-item>
       <ion-label position="floating"><b>La durée</b></ion-label>
       <ion-input [(ngModel)]="movieForm.duration"
         placeholder="Entrer la durée du film"
       ></ion-input>
-    </ion-item>
+    </ion-item> -->
 
 
 
@@ -74,7 +74,7 @@
 
     <ion-item>
       <ion-label position="floating"><b>Liste des cinémas</b></ion-label>
-      <ion-select multiple="true" cancelText="Retour" okText="Valider" [(ngModel)]="cinemaSelected" [value]="cinemaSelected">
+      <ion-select multiple="true" cancelText="Retour" okText="Valider" [(ngModel)]="cinemaSelected" [value]="cinemaSelected" (ionChange)="onSelectCinema($event)">
         <ion-select-option *ngFor="let cinema of cinemaList" [value]="cinema.name">{{cinema.name}}</ion-select-option>
       </ion-select>
     </ion-item>

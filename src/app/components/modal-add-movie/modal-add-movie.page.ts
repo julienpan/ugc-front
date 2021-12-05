@@ -53,12 +53,19 @@ export class ModalAddMoviePage implements OnInit {
 
   currentDate : any;
 
+  minTime = '00:00';
+  maxTime = '05:00';
+
+  valid : boolean = false;
+
   constructor(
     private modalCtrl: ModalController,
     private firestore: AngularFirestore,
   ) { }
 
   ngOnInit() {
+
+    this.currentDate = new Date(1).toISOString();
 
     this.cinemaList = [];
     this.getAllCinema();
@@ -95,23 +102,65 @@ export class ModalAddMoviePage implements OnInit {
     console.log('GENRELIST : ', this.genreList);
   }
 
+  onSelectDuration(event) {
+    console.log(event);
+    this.movieForm.duration = event.detail.value.substring(11, 16);
+  }
+
   addMovie() {
 
-    this.movieForm.releaseDate = this.movieForm.releaseDate.substring(8, 10) + '/' + this.movieForm.releaseDate.substring(5, 7) + '/' + this.movieForm.releaseDate.substring(0, 4);
+    this.checkForm();
+    if(this.valid == true) {
+      this.movieForm.releaseDate = this.movieForm.releaseDate.substring(8, 10) + '/' + this.movieForm.releaseDate.substring(5, 7) + '/' + this.movieForm.releaseDate.substring(0, 4);
+      const movieRef = this.firestore.collection('movie');
+      movieRef.doc(this.movieForm.name).set({
+        name: this.movieForm.name,
+        releaseDate: this.movieForm.releaseDate,
+        note: 0,
+        duration: this.movieForm.duration,
+        producerName: this.movieForm.producerName,
+        synopsis: this.movieForm.synopsis,
+        trailer: this.movieForm.trailer,
+        cinemaList: this.cinemaSelected,
+        genres: this.genreSelected
+      })
+      this.dismissModal();
+    } else {
+      console.log('Ajout impossible', this.movieForm);
+    }
+  }
 
-    const movieRef = this.firestore.collection('movie');
-    movieRef.doc(this.movieForm.name).set({
-      name: this.movieForm.name,
-      releaseDate: this.movieForm.releaseDate,
-      note: 0,
-      duration: this.movieForm.duration,
-      producerName: this.movieForm.producerName,
-      synopsis: this.movieForm.synopsis,
-      trailer: this.movieForm.trailer,
-      cinemaList: this.cinemaSelected,
-      genres: this.genreSelected
-    })
-    this.dismissModal();
+  onSelectCinema(event) {
+    this.cinemaSelected = event.detail.value;
+    console.log(this.cinemaSelected);
+    this.movieForm.cinemaList = this.cinemaSelected;
+  }
+
+  checkForm() {
+    if(this.movieForm.cinemaList.length <= 0) {
+      console.log('Error : cinemaList');
+    }
+    else if(this.movieForm.duration == '') {
+      console.log('Error : Duration');
+    }
+    else if(this.movieForm.name == '') {
+      console.log('Error : Name');
+    }
+    else if(this.movieForm.producerName == '') {
+      console.log('Error : ProducerName');
+    }
+    else if(this.movieForm.releaseDate == '') {
+      console.log('Error : ReleaseDate');
+    }
+    else if(this.movieForm.synopsis == '') {
+      console.log('Error : Synopsis');
+    }
+    else if(this.movieForm.trailer == '') {
+      console.log('Error : Trailer');
+    }
+    else {
+      this.valid = true;
+    }
   }
 
   dismissModal(object?) {

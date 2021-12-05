@@ -81,9 +81,7 @@ export class CinemaPage implements OnInit {
     ) {}
 
   ngOnInit() {
-    this.cinemaList = [];
     this.getAllCinema();
-
     if(localStorage.getItem('admin') != null) {
       this.isAdmin = true;
       console.log('Mode admin');
@@ -91,11 +89,13 @@ export class CinemaPage implements OnInit {
       this.isAdmin = false;
       console.log('Mode User');
     }
-
   }
 
+  // refresh() {
+  //   this.getAllCinema;
+  // }
+
   getAllCinema() {
-    this.cinemaList = [];
     this.cinema = this.firestore.collection('cinema').valueChanges({idField: 'customId'}).pipe(take(1))
     this.cinema.forEach((r) => {
       r.forEach((r2) => {
@@ -106,7 +106,7 @@ export class CinemaPage implements OnInit {
         });
       });
     });
-    // this.cinemaList.pop();
+    this.cinemaList.pop();
     console.log('CINEMA LIST', this.cinemaList);
   }
 
@@ -114,6 +114,11 @@ export class CinemaPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: ModalAddCinemaPage,
     });
+    // modal.onDidDismiss().then((data) => {
+    //   if(data.role != 'backdrop') {
+    //     this.refresh();
+    //   }
+    // })
     return await modal.present();
   }
 

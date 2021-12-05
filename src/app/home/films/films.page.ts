@@ -40,7 +40,6 @@ export class FilmsPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.movieList = [];
     this.getAllMovies();
 
     if(localStorage.getItem('admin') != null) {
@@ -53,13 +52,11 @@ export class FilmsPage implements OnInit {
 
   }
 
-  refresh() {
-    this.movieList = [];
-    this.getAllMovies();
-  }
+  // refresh() {
+  //   this.getAllMovies();
+  // }
 
   getAllMovies() {
-    this.movieList = [];
     this.movie = this.firestore.collection('movie').valueChanges({idField: 'customId'}).pipe(take(1))
     this.movie.forEach((r) => {
       r.forEach((r2) => {
@@ -91,9 +88,11 @@ export class FilmsPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: ModalAddMoviePage,
     });
-    modal.onDidDismiss().then(() => {
-      this.refresh();
-    })
+    // modal.onDidDismiss().then((data) => {
+    //   if(data.role != 'backdrop') {
+    //     this.refresh();
+    //   }
+    // })
     return await modal.present();
   }
 
