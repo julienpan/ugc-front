@@ -5,6 +5,10 @@ ion-title {
     padding: 10px;
 }
 
+#section {
+    margin-bottom: 20px;
+}
+
 #card {
     display: flex;
     justify-content: center;
@@ -25,9 +29,7 @@ ion-title {
     }
 }
 
-#movie:hover {
-    // transform: scale(1.1);
-
+#image:hover {
     .overlay {
         opacity: 1;
         background-color: black;

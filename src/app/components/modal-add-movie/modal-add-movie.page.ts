@@ -20,6 +20,7 @@ export class ModalAddMoviePage implements OnInit {
     image: '',
     trailer: '',
     cinemaList: [],
+    type: '',
   }
 
   movie: Observable<any[]>;
@@ -48,8 +49,12 @@ export class ModalAddMoviePage implements OnInit {
 
   genreList = [];
 
+  typeList = ['NOUVEAU', 'AVANT-PREMIERE', 'EN-AVANT', 'NORMAL'];
+
   cinemaSelected = [];
   genreSelected = [];
+
+  typeSelected : string;
 
   currentDate : any;
 
@@ -122,7 +127,8 @@ export class ModalAddMoviePage implements OnInit {
         synopsis: this.movieForm.synopsis,
         trailer: this.movieForm.trailer,
         cinemaList: this.cinemaSelected,
-        genres: this.genreSelected
+        genres: this.genreSelected,
+        type: this.typeSelected
       })
       this.dismissModal();
     } else {

@@ -73,6 +73,13 @@
     </ion-item>
 
     <ion-item>
+      <ion-label position="floating"><b>Type</b></ion-label>
+      <ion-select multiple="true" cancelText="Retour" okText="Valider" [(ngModel)]="typeSelected" [value]="typeSelected">
+        <ion-select-option *ngFor="let type of typeList" [value]="types">{{type}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  
+    <ion-item>
       <ion-label position="floating"><b>Liste des cinémas</b></ion-label>
       <ion-select multiple="true" cancelText="Retour" okText="Valider" [(ngModel)]="cinemaSelected" [value]="cinemaSelected" (ionChange)="onSelectCinema($event)">
         <ion-select-option *ngFor="let cinema of cinemaList" [value]="cinema.name">{{cinema.name}}</ion-select-option>

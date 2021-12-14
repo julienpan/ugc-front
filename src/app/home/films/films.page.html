@@ -5,7 +5,12 @@
       <ion-back-button defaultHref="home/accueil"></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="end" *ngIf="isAdmin">
-      <ion-button fill="outline" color="primary" (click)="openModalAddMovie()">Ajouter un film</ion-button>
+      <ion-button fill="outline" color="primary" (click)="openModalAddMovie()">Ajouter</ion-button>
+      <ion-button *ngIf="!deleteMode" fill="outline" color="danger" (click)="deleteMode = !deleteMode">Supprimer
+      </ion-button>
+      <ion-button *ngIf="deleteMode" fill="outline" color="danger" (click)="deleteMode = !deleteMode">Annuler
+      </ion-button>
+
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -43,24 +48,29 @@
     </div>
 
     <div id="section">
-      <ion-item lines="none">
-        <ion-text>Nouveautés</ion-text>
-        <ion-button slot="end" fill="clear">Tout voir</ion-button>
+      <ion-item lines="none" color="primary">
+        <ion-text>Recommandations</ion-text>
+        <ion-button slot="end" fill="clear" color="light">Tout voir</ion-button>
       </ion-item>
     </div>
 
     <div id="newMovie">
       <ion-slides [options]="slideOpts" pager="true">
-        <ion-slide *ngFor="let movie of movieList">
+        <ion-slide *ngFor="let movie of recommendedMovieList">
           <div id="movie">
             <div id="image">
               <div class="overlay">
-                <ion-button fill="clear" style="font-size: 10px;" color="light" (click)="watchTrailer(movie.trailer)">Voir la bande-annonce</ion-button>
+                <ion-button fill="clear" style="font-size: 10px;" color="light" (click)="watchTrailer(movie.trailer)">
+                  Voir la bande-annonce
+                  <ion-icon name="play" color="light"></ion-icon>
+                </ion-button>
               </div>
-              <img  style="width: 100%; height: 100%" src="./assets/icon/ugcMovie.jpeg">
+              <img style="width: 100%; height: 100%" src="./assets/icon/ugcMovie.jpeg">
             </div>
             <div id="title">
               <ion-text>{{movie.name}}</ion-text>
+              <ion-icon name="close-circle" size="large" color="danger" *ngIf="deleteMode" (click)="deleteMovie(movie)">
+              </ion-icon>
             </div>
           </div>
         </ion-slide>
@@ -68,19 +78,130 @@
     </div>
 
 
+
     <div id="section">
-      <ion-item lines="none">
-        <ion-text>A l'affiche</ion-text>
-        <ion-button slot="end" fill="clear">Tout voir</ion-button>
+      <ion-item lines="none" color="primary">
+        <ion-text>Nouveautés</ion-text>
+        <ion-button slot="end" fill="clear" color="light">Tout voir</ion-button>
       </ion-item>
     </div>
 
+    <div id="newMovie">
+      <ion-slides [options]="slideOpts" pager="true">
+        <ion-slide *ngFor="let movie of newMovieList">
+          <div id="movie">
+            <div id="image">
+              <div class="overlay">
+                <ion-button fill="clear" style="font-size: 10px;" color="light" (click)="watchTrailer(movie.trailer)">
+                  Voir la bande-annonce
+                  <ion-icon name="play" color="light"></ion-icon>
+                </ion-button>
+              </div>
+              <img style="width: 100%; height: 100%" src="./assets/icon/ugcMovie.jpeg">
+            </div>
+            <div id="title">
+              <ion-text>{{movie.name}}</ion-text>
+              <ion-icon name="close-circle" size="large" color="danger" *ngIf="deleteMode" (click)="deleteMovie(movie)">
+              </ion-icon>
+            </div>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+
+
+
     <div id="section">
-      <ion-item lines="none">
-        <ion-text>Avant-premières</ion-text>
-        <ion-button slot="end" fill="clear">Tout voir</ion-button>
+      <ion-item lines="none" color="primary">
+        <ion-text>A l'affiche</ion-text>
+        <ion-button slot="end" fill="clear" color="light">Tout voir</ion-button>
       </ion-item>
     </div>
+
+    <div id="newMovie">
+      <ion-slides [options]="slideOpts" pager="true">
+        <ion-slide *ngFor="let movie of frontMovieList">
+          <div id="movie">
+            <div id="image">
+              <div class="overlay">
+                <ion-button fill="clear" style="font-size: 10px;" color="light" (click)="watchTrailer(movie.trailer)">
+                  Voir la bande-annonce
+                  <ion-icon name="play" color="light"></ion-icon>
+                </ion-button>
+              </div>
+              <img style="width: 100%; height: 100%" src="./assets/icon/ugcMovie.jpeg">
+            </div>
+            <div id="title">
+              <ion-text>{{movie.name}}</ion-text>
+              <ion-icon name="close-circle" size="large" color="danger" *ngIf="deleteMode" (click)="deleteMovie(movie)">
+              </ion-icon>
+            </div>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+
+    <div id="section">
+      <ion-item lines="none" color="primary">
+        <ion-text>Avant-premières</ion-text>
+        <ion-button slot="end" fill="clear" color="light">Tout voir</ion-button>
+      </ion-item>
+    </div>
+
+    <div id="newMovie">
+      <ion-slides [options]="slideOpts" pager="true">
+        <ion-slide *ngFor="let movie of previewMovieList">
+          <div id="movie">
+            <div id="image">
+              <div class="overlay">
+                <ion-button fill="clear" style="font-size: 10px;" color="light" (click)="watchTrailer(movie.trailer)">
+                  Voir la bande-annonce
+                  <ion-icon name="play" color="light"></ion-icon>
+                </ion-button>
+              </div>
+              <img style="width: 100%; height: 100%" src="./assets/icon/ugcMovie.jpeg">
+            </div>
+            <div id="title">
+              <ion-text>{{movie.name}}</ion-text>
+              <ion-icon name="close-circle" size="large" color="danger" *ngIf="deleteMode" (click)="deleteMovie(movie)">
+              </ion-icon>
+            </div>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+
+    <div id="section">
+      <ion-item lines="none" color="primary">
+        <ion-text>Liste des films</ion-text>
+        <ion-button slot="end" fill="clear" color="light">Tout voir</ion-button>
+      </ion-item>
+    </div>
+
+    <div id="newMovie">
+      <ion-slides [options]="slideOpts" pager="true">
+        <ion-slide *ngFor="let movie of basicMovieList">
+          <div id="movie">
+            <div id="image">
+              <div class="overlay">
+                <ion-button fill="clear" style="font-size: 10px;" color="light" (click)="watchTrailer(movie.trailer)">
+                  Voir la bande-annonce
+                  <ion-icon name="play" color="light"></ion-icon>
+                </ion-button>
+              </div>
+              <img style="width: 100%; height: 100%" src="./assets/icon/ugcMovie.jpeg">
+            </div>
+            <div id="title">
+              <ion-text>{{movie.name}}</ion-text>
+              <ion-icon name="close-circle" size="large" color="danger" *ngIf="deleteMode" (click)="deleteMovie(movie)">
+              </ion-icon>
+            </div>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+
+
 
 
 

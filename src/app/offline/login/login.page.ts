@@ -57,7 +57,7 @@ export class LoginPage implements OnInit {
     { id: 7, prefName: 'policier'},
     { id: 8, prefName: 'aventure'},
   ];
-  prefSelected: [];
+  prefSelected: any;
 
   isSignedIn = false;
 
@@ -118,13 +118,18 @@ export class LoginPage implements OnInit {
   // }
 
   add() {
+    this.prefSelected.forEach(r => {
+      if(!this.user.preferences.includes(r))
+        this.user.preferences.push(r);
+    })
+
     const userRef = this.firestore.collection('users');
     userRef.doc(this.user.email).set({
       lastname: this.user.lastname,
       firstname: this.user.firstname,
       email: this.user.email,
       password: this.user.password,
-      preferences: this.user.password
+      preferences: this.user.preferences
     });
 
     this.user.lastname = "";
@@ -134,9 +139,9 @@ export class LoginPage implements OnInit {
     this.prefSelected = [];
   }
 
-  changePref($event) : void {
+  changePref($event) {
     console.log($event);
-    this.prefSelected = $event.detail.value;
+    this.prefSelected = $event.detail.value
   }
 
   segmentChanged($event) {

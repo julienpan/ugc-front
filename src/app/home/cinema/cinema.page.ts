@@ -24,33 +24,47 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./cinema.page.scss'],
 })
 export class CinemaPage implements OnInit {
-  segmentForm:
-    | 'tous'
-    | 'paris'
-    | 'bordeaux'
-    | 'hautsDeFrance'
-    | 'lyon'
-    | 'nantes'
-    | 'toulouse' = 'tous';
+  // segmentForm:
+  //   | 'tous'
+  //   | 'paris'
+  //   | 'bordeaux'
+  //   | 'hautsDeFrance'
+  //   | 'lyon'
+  //   | 'nantes'
+  //   | 'toulouse' = 'tous';
+
+  // form: {
+  //   value:
+  //     | 'tous'
+  //     | 'paris'
+  //     | 'bordeaux'
+  //     | 'hautsDeFrance'
+  //     | 'lyon'
+  //     | 'nantes'
+  //     | 'toulouse';
+  //   disable: boolean;
+  // }[] = [
+  //   { value: 'tous', disable: false },
+  //   { value: 'paris', disable: false },
+  //   { value: 'bordeaux', disable: false },
+  //   { value: 'hautsDeFrance', disable: false },
+  //   { value: 'lyon', disable: false },
+  //   { value: 'nantes', disable: false },
+  //   { value: 'toulouse', disable: false },
+  // ];
+
+  segmentForm: 'TOUS' | 'PARIS' | 'BORDEAUX' | 'LYON' | 'NANTES' | 'TOULOUSE' = 'TOUS';
 
   form: {
-    value:
-      | 'tous'
-      | 'paris'
-      | 'bordeaux'
-      | 'hautsDeFrance'
-      | 'lyon'
-      | 'nantes'
-      | 'toulouse';
+    value: 'TOUS' | 'PARIS' | 'BORDEAUX' | 'LYON' | 'NANTES' | 'TOULOUSE';
     disable: boolean;
   }[] = [
-    { value: 'tous', disable: false },
-    { value: 'paris', disable: false },
-    { value: 'bordeaux', disable: false },
-    { value: 'hautsDeFrance', disable: false },
-    { value: 'lyon', disable: false },
-    { value: 'nantes', disable: false },
-    { value: 'toulouse', disable: false },
+    { value: 'TOUS', disable: false },
+    { value: 'PARIS', disable: false },
+    { value: 'BORDEAUX', disable: false },
+    { value: 'LYON', disable: false },
+    { value: 'NANTES', disable: false },
+    { value: 'TOULOUSE', disable: false },
   ];
 
   cinemaRef: AngularFirestoreCollection<any>;
@@ -71,6 +85,12 @@ export class CinemaPage implements OnInit {
       },
     },
   ];
+
+  cinemaListParis = [];
+  cinemaListBordeaux = [];
+  cinemaListLyon = [];
+  cinemaListNantes = [];
+  cinemaListToulouse = [];
 
   isAdmin : boolean = false
 
@@ -104,6 +124,17 @@ export class CinemaPage implements OnInit {
           name: r2.name,
           address: r2.address,
         });
+        if(r2.address.fullAddress.includes('Paris')) {
+          this.cinemaListParis.push(r2);
+        } else if(r2.address.fullAddress.includes('Bordeaux')) {
+          this.cinemaListBordeaux.push(r2);
+        } else if(r2.address.fullAddress.includes('Lyon')) {
+          this.cinemaListLyon.push(r2);
+        } else if(r2.address.fullAddress.includes('Nantes')) {
+          this.cinemaListNantes.push(r2);
+        } else if(r2.address.fullAddress.includes('Toulouse')) {
+          this.cinemaListToulouse.push(r2);
+        }
       });
     });
     this.cinemaList.pop();
@@ -124,5 +155,18 @@ export class CinemaPage implements OnInit {
 
   segmentChanged($event) {
     this.segmentForm = $event.detail.value;
+    // this.cinema = this.firestore.collection('cinema').valueChanges({idField: 'customId'}).pipe(take(1))
+    // this.cinema.forEach((r) => {
+    //   r.forEach((r2) => {
+    //     console.log('ID : ', r2.customId);
+    //     this.cinemaList.push({
+    //       name: r2.name,
+    //       address: r2.address,
+    //     });
+    //   });
+    // });
+    // this.cinemaList.pop();
+    // console.log('CINEMA LIST', this.cinemaList);
+
   }
 }

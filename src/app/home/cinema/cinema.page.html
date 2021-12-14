@@ -23,57 +23,120 @@
       <ion-label>Bordeaux</ion-label>
     </ion-segment-button>
     <ion-segment-button [value]="form[3].value" [disabled]="form[3].disable">
-      <ion-label>Hauts-de-France</ion-label>
-    </ion-segment-button>
-    <ion-segment-button [value]="form[4].value" [disabled]="form[4].disable">
       <ion-label>Lyon</ion-label>
     </ion-segment-button>
-    <ion-segment-button [value]="form[5].value" [disabled]="form[5].disable">
+    <ion-segment-button [value]="form[4].value" [disabled]="form[4].disable">
       <ion-label>Nantes</ion-label>
     </ion-segment-button>
-    <ion-segment-button [value]="form[6].value" [disabled]="form[6].disable">
+    <ion-segment-button [value]="form[5].value" [disabled]="form[5].disable">
       <ion-label>Toulouse</ion-label>
     </ion-segment-button>
   </ion-segment>
 
   <ion-list>
 
-    <ion-grid *ngIf="segmentForm == 'tous'">
+    <ion-grid *ngIf="segmentForm == 'TOUS'">
       <ion-row style="height: 250px; border-bottom: 1px solid black;" *ngFor="let cinema of cinemaList">
         <div style="display: flex; width: 100%;">
-          <ion-col size="4" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+          <ion-col size="4"
+            style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
             <img src="./assets/icon/ugc.png" alt="">
-            <!-- <div style="background: black; width: 100%; height: 100%;"></div> -->
           </ion-col>
           <ion-col>
             <div id="info">
               <ion-title>{{cinema.name}}</ion-title>
-              <!-- <ion-text color="medium">Nombres de films et avants-premires</ion-text> -->
               <ion-text>{{cinema.address.fullAddress}}</ion-text>
-              <!-- <ion-text>Code postal VILLE</ion-text> -->
             </div>
           </ion-col>
         </div>
       </ion-row>
     </ion-grid>
 
-    <ion-grid *ngIf="segmentForm == 'paris'">
-      <ion-row style="height: 250px; border-bottom: 1px solid black;" *ngFor="let cinema of cinemaList">
-        <div *ngIf="cinema.address.city.includes('Paris')" style="display: flex; width: 100%;">
-          <ion-col size="4" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    <ion-grid *ngIf="segmentForm == 'PARIS'">
+      <ion-row style="height: 250px; border-bottom: 1px solid black;" *ngFor="let cinema of cinemaListParis">
+        <div style="display: flex; width: 100%;">
+          <ion-col size="4"
+            style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
             <img src="./assets/icon/ugc.png" alt="">
-            <!-- <div style="background: black; width: 100%; height: 100%;"></div> -->
           </ion-col>
           <ion-col>
             <div id="info">
               <ion-title>{{cinema.name}}</ion-title>
-              <!-- <ion-text color="medium">Nombres de films et avants-premires</ion-text> -->
               <ion-text>{{cinema.address.fullAddress}}</ion-text>
-              <!-- <ion-text>Code postal VILLE</ion-text> -->
             </div>
           </ion-col>
         </div>
       </ion-row>
     </ion-grid>
+
+    <ion-grid *ngIf="segmentForm == 'BORDEAUX'">
+      <ion-row style="height: 250px; border-bottom: 1px solid black;" *ngFor="let cinema of cinemaListBordeaux">
+        <div style="display: flex; width: 100%;">
+          <ion-col size="4"
+            style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <img src="./assets/icon/ugc.png" alt="">
+          </ion-col>
+          <ion-col>
+            <div id="info">
+              <ion-title>{{cinema.name}}</ion-title>
+              <ion-text>{{cinema.address.fullAddress}}</ion-text>
+            </div>
+          </ion-col>
+        </div>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid *ngIf="segmentForm == 'Lyon'">
+      <ion-row style="height: 250px; border-bottom: 1px solid black;" *ngFor="let cinema of cinemaListLyon">
+        <div style="display: flex; width: 100%;">
+          <ion-col size="4"
+            style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <img src="./assets/icon/ugc.png" alt="">
+          </ion-col>
+          <ion-col>
+            <div id="info">
+              <ion-title>{{cinema.name}}</ion-title>
+              <ion-text>{{cinema.address.fullAddress}}</ion-text>
+            </div>
+          </ion-col>
+        </div>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid *ngIf="segmentForm == 'Nantes'">
+      <ion-row style="height: 250px; border-bottom: 1px solid black;" *ngFor="let cinema of cinemaListNantes">
+        <div style="display: flex; width: 100%;">
+          <ion-col size="4"
+            style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <img src="./assets/icon/ugc.png" alt="">
+          </ion-col>
+          <ion-col>
+            <div id="info">
+              <ion-title>{{cinema.name}}</ion-title>
+              <ion-text>{{cinema.address.fullAddress}}</ion-text>
+            </div>
+          </ion-col>
+        </div>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid *ngIf="segmentForm == 'Toulouse'">
+      <ion-row style="height: 250px; border-bottom: 1px solid black;" *ngFor="let cinema of cinemaListToulouse">
+        <div style="display: flex; width: 100%;">
+          <ion-col size="4"
+            style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <img src="./assets/icon/ugc.png" alt="">
+          </ion-col>
+          <ion-col>
+            <div id="info">
+              <ion-title>{{cinema.name}}</ion-title>
+              <ion-text>{{cinema.address.fullAddress}}</ion-text>
+            </div>
+          </ion-col>
+        </div>
+      </ion-row>
+    </ion-grid>
+
+
   </ion-list>
 </ion-content>
