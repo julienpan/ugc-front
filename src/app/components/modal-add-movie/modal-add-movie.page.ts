@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-modal-add-movie',
@@ -63,10 +65,24 @@ export class ModalAddMoviePage implements OnInit {
 
   valid : boolean = false;
 
+  title = "cloudsSorage";
+  fb : any;
+  selectedFile: File = null;
+  downloadURL: Observable<string>;
+
+  file : any;
+  filePath : any;
+
   constructor(
     private modalCtrl: ModalController,
     private firestore: AngularFirestore,
+    private firestorage: AngularFireStorage,
   ) { }
+
+  onFileSelected(event) {
+    this.file = event.target.files[0];
+    this.filePath = `movieImages/${this.file.name.toLowerCase()}`;
+  }
 
   ngOnInit() {
 
@@ -90,7 +106,7 @@ export class ModalAddMoviePage implements OnInit {
       });
     });
     // this.cinemaList.pop();
-    console.log('CINEMA LIST', this.cinemaList);
+    // console.log('CINEMA LIST', this.cinemaList);
   }
 
   getAllGenre() {
@@ -104,7 +120,7 @@ export class ModalAddMoviePage implements OnInit {
         })
       })
     })
-    console.log('GENRELIST : ', this.genreList);
+    // console.log('GENRELIST : ', this.genreList);
   }
 
   onSelectDuration(event) {
@@ -115,6 +131,23 @@ export class ModalAddMoviePage implements OnInit {
   addMovie() {
 
     this.checkForm();
+
+    const fileRef = this.firestorage.ref(this.filePath);
+    const task = this.firestorage.upload(`movieImages/${this.file.name.toLowerCase()}`, this.file);
+    task.snapshotChanges().pipe(finalize(() => {
+      this.downloadURL = fileRef.getDownloadURL();
+      this.downloadURL.subscribe(url => {
+        if (url) {
+          this.fb = url;
+        }
+      console.log(this.fb);
+      });
+    })).subscribe(url => {
+      if (url) {
+        console.log(url);
+      }
+    });
+
     if(this.valid == true) {
       this.movieForm.releaseDate = this.movieForm.releaseDate.substring(8, 10) + '/' + this.movieForm.releaseDate.substring(5, 7) + '/' + this.movieForm.releaseDate.substring(0, 4);
       const movieRef = this.firestore.collection('movie');

@@ -9,6 +9,7 @@ import { snapshotChanges } from '@angular/fire/compat/database';
 import { Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 
 @Component({
@@ -65,6 +66,7 @@ export class FilmsPage implements OnInit {
     private router: Router,
     private adminService: AdminService,
     private firebaseAuth: AngularFireAuth,
+    private firestorage: AngularFireStorage,
   ) { }
 
   ngOnInit() {
@@ -119,7 +121,7 @@ export class FilmsPage implements OnInit {
             // console.log(r2);
             r2.preferences.forEach(r3 => {
               this.prefList.push(r3);
-              
+
               this.movieList.forEach(r => {
                 r.genres.forEach(r2 => {
                   if(r2.toLowerCase() == r3) {
@@ -143,6 +145,14 @@ export class FilmsPage implements OnInit {
     this.movie = this.firestore.collection('movie').valueChanges({idField: 'customId'}).pipe(take(1))
     this.movie.forEach((r) => {
       r.forEach((r2) => {
+
+        this.firestorage.ref(`movieImages/${r2.name.toLowerCase()}.jpeg`).getDownloadURL().forEach(r => {
+          // console.log(r);
+          r2.image = r;
+        }).catch(e => {
+          console.log('Aucune image pour : ', r2, 'ERROR :', e);
+        })
+
         this.movieList.push({
           id: r2.customId,
           name: r2.name,
@@ -157,6 +167,8 @@ export class FilmsPage implements OnInit {
           cinemaList: r2.cinemaList,
           type: r2.type
         });
+
+        
         if(r2.type == 'NOUVEAU') {
           this.newMovieList.push(r2);
         } else if (r2.type == 'AVANT-PREMIERE') {

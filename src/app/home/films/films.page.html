@@ -47,18 +47,19 @@
       </ion-button>
     </div>
 
-    <div id="section">
+    <div id="section" *ngIf="recommendedMovieList.lenght > 0">
       <ion-item lines="none" color="primary">
         <ion-text>Recommandations</ion-text>
         <ion-button slot="end" fill="clear" color="light">Tout voir</ion-button>
       </ion-item>
     </div>
 
-    <div id="newMovie">
+    <div id="newMovie" *ngIf="recommendedMovieList.lenght > 0">
       <ion-slides [options]="slideOpts" pager="true">
         <ion-slide *ngFor="let movie of recommendedMovieList">
           <div id="movie">
             <div id="image">
+              <img id="movieImage" [src]="movie.image" alt="">
               <div class="overlay">
                 <ion-button fill="clear" style="font-size: 10px;" color="light" (click)="watchTrailer(movie.trailer)">
                   Voir la bande-annonce
@@ -91,6 +92,7 @@
         <ion-slide *ngFor="let movie of newMovieList">
           <div id="movie">
             <div id="image">
+              <img id="movieImage" [src]="movie.image" alt="">
               <div class="overlay">
                 <ion-button fill="clear" style="font-size: 10px;" color="light" (click)="watchTrailer(movie.trailer)">
                   Voir la bande-annonce
@@ -123,6 +125,7 @@
         <ion-slide *ngFor="let movie of frontMovieList">
           <div id="movie">
             <div id="image">
+              <img id="movieImage" [src]="movie.image" alt="">
               <div class="overlay">
                 <ion-button fill="clear" style="font-size: 10px;" color="light" (click)="watchTrailer(movie.trailer)">
                   Voir la bande-annonce
@@ -153,6 +156,7 @@
         <ion-slide *ngFor="let movie of previewMovieList">
           <div id="movie">
             <div id="image">
+              <img id="movieImage" [src]="movie.image" alt="">
               <div class="overlay">
                 <ion-button fill="clear" style="font-size: 10px;" color="light" (click)="watchTrailer(movie.trailer)">
                   Voir la bande-annonce
@@ -183,6 +187,7 @@
         <ion-slide *ngFor="let movie of basicMovieList">
           <div id="movie">
             <div id="image">
+              <img id="movieImage" [src]="movie.image" alt="">
               <div class="overlay">
                 <ion-button fill="clear" style="font-size: 10px;" color="light" (click)="watchTrailer(movie.trailer)">
                   Voir la bande-annonce

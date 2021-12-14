@@ -85,6 +85,18 @@
         <ion-select-option *ngFor="let cinema of cinemaList" [value]="cinema.name">{{cinema.name}}</ion-select-option>
       </ion-select>
     </ion-item>
+
+
+    <ion-item>
+      <ion-label><b>Image</b></ion-label>
+      <input type="file"
+      id="file"
+      #userPhoto
+      (change)="onFileSelected($event)"
+      name="image"
+      autocomplete="off"
+      />
+    </ion-item>
   </ion-list>
 
 </ion-content>

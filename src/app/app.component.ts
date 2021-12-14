@@ -36,9 +36,11 @@ export class AppComponent implements OnInit {
           console.log('Connecté en tant que administrateur')
           localStorage.setItem('admin', 'true');
           console.log(localStorage.getItem('admin'))
+        } else {
+          console.log('User connecté');
         }
       } else {
-        console.log('Non connecté')
+        console.log('Non connecté');
       }
     });
   }
