@@ -24,39 +24,11 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./cinema.page.scss'],
 })
 export class CinemaPage implements OnInit {
-  // segmentForm:
-  //   | 'tous'
-  //   | 'paris'
-  //   | 'bordeaux'
-  //   | 'hautsDeFrance'
-  //   | 'lyon'
-  //   | 'nantes'
-  //   | 'toulouse' = 'tous';
 
-  // form: {
-  //   value:
-  //     | 'tous'
-  //     | 'paris'
-  //     | 'bordeaux'
-  //     | 'hautsDeFrance'
-  //     | 'lyon'
-  //     | 'nantes'
-  //     | 'toulouse';
-  //   disable: boolean;
-  // }[] = [
-  //   { value: 'tous', disable: false },
-  //   { value: 'paris', disable: false },
-  //   { value: 'bordeaux', disable: false },
-  //   { value: 'hautsDeFrance', disable: false },
-  //   { value: 'lyon', disable: false },
-  //   { value: 'nantes', disable: false },
-  //   { value: 'toulouse', disable: false },
-  // ];
-
-  segmentForm: 'TOUS' | 'PARIS' | 'BORDEAUX' | 'LYON' | 'NANTES' | 'TOULOUSE' = 'TOUS';
+  segmentForm: 'TOUS' | 'PARIS' | 'BORDEAUX' | 'LYON' | 'NANTES' | 'TOULOUSE' | 'AROUND' = 'TOUS';
 
   form: {
-    value: 'TOUS' | 'PARIS' | 'BORDEAUX' | 'LYON' | 'NANTES' | 'TOULOUSE';
+    value: 'TOUS' | 'PARIS' | 'BORDEAUX' | 'LYON' | 'NANTES' | 'TOULOUSE' | 'AROUND';
     disable: boolean;
   }[] = [
     { value: 'TOUS', disable: false },
@@ -65,6 +37,7 @@ export class CinemaPage implements OnInit {
     { value: 'LYON', disable: false },
     { value: 'NANTES', disable: false },
     { value: 'TOULOUSE', disable: false },
+    { value: 'AROUND', disable: false },
   ];
 
   cinemaRef: AngularFirestoreCollection<any>;
@@ -92,7 +65,11 @@ export class CinemaPage implements OnInit {
   cinemaListNantes = [];
   cinemaListToulouse = [];
 
-  isAdmin : boolean = false
+  isAdmin : boolean = false;
+
+  isAround : boolean = false;
+  latitude = 0;
+  longitude = 0;
 
   constructor(
     private firestore: AngularFirestore,
@@ -101,6 +78,16 @@ export class CinemaPage implements OnInit {
     ) {}
 
   ngOnInit() {
+
+    this.isAround = history.state.around != null ? history.state.around : false;
+    this.latitude = history.state.lat != null ? history.state.lat : 0;
+    this.longitude = history.state.lng != null ? history.state.lng : 0;
+
+    if(this.isAround == true) {
+      this.segmentForm = 'AROUND';
+      console.log(this.latitude, this.longitude);
+    }
+    
     this.getAllCinema();
     if(localStorage.getItem('admin') != null) {
       this.isAdmin = true;

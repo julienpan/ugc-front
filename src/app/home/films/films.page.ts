@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, NgZone, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { MapsAPILoader } from '@agm/core';
 
 
 @Component({
@@ -60,6 +61,26 @@ export class FilmsPage implements OnInit {
 
   innerWidth: any;
 
+  latitude: number;
+  longitude: number;
+  zoom: number;
+  address: string;
+  public geoCoder;
+
+  errorForm = '';
+
+  addressForm = {
+    city: '',
+    country: '',
+    fullAddress: '',
+    latitude: 0,
+    longitude: 0,
+    street: '',
+    street_2: '',
+    zipCode: ''
+  }
+
+
   constructor(
     private modalCtrl: ModalController,
     private firestore: AngularFirestore,
@@ -67,9 +88,18 @@ export class FilmsPage implements OnInit {
     private adminService: AdminService,
     private firebaseAuth: AngularFireAuth,
     private firestorage: AngularFireStorage,
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone,
   ) { }
 
   ngOnInit() {
+
+    this.mapsAPILoader.load().then(() => {
+      this.geoCoder = new google.maps.Geocoder;
+    }).catch(e => {
+      console.log(e);
+    })
+
     if(localStorage.getItem('admin') != null) {
       this.isAdmin = true;
       console.log('Mode admin');
@@ -88,15 +118,54 @@ export class FilmsPage implements OnInit {
     } else {
       this.slideOpts.slidesPerView = 4.5;
     }
-
     this.getAllMovies();
     this.getAllGenre();
-
   }
 
   refresh() {
     this.getAllMovies();
   }
+
+  getAddress(latitude, longitude): boolean {
+    this.geoCoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results, status) => {
+      this.ngZone.run(() => {
+        console.log('RESULTS', results);
+        console.log('STATUS', status);
+        if (status === 'OK') {
+          if (results[0]) {
+            this.zoom = 12;
+            this.address = results[0].formatted_address;
+            this.addressForm.fullAddress = results[0].formatted_address;
+            this.addressForm.latitude = latitude
+            this.addressForm.longitude = longitude
+            console.log(this.addressForm.fullAddress);
+
+            for (const component of results[0].address_components) {
+              // console.log(component);
+              if (component.types.includes('street_number'))
+                this.addressForm.street = component.long_name
+              else if (component.types.includes('route'))
+                this.addressForm.street_2 = component.long_name
+              else if (component.types.includes('locality'))
+                this.addressForm.city = component.long_name
+              else if (component.types.includes('country'))
+                this.addressForm.country = component.long_name
+              else if (component.types.includes('postal_code'))
+                this.addressForm.zipCode = component.long_name
+            }
+          } else {
+            window.alert('No results found');
+            return false
+          }
+        } else {
+          window.alert('Geocoder failed due to: ' + status);
+          return false
+        }
+      })
+    });
+    return true
+  }
+
 
   getAllGenre() {
     this.genre = this.firestore.collection('genres').valueChanges();
@@ -203,6 +272,31 @@ export class FilmsPage implements OnInit {
     // this.refresh();
   }
 
+  getCinemaLocation() {
+
+    this.mapsAPILoader.load().then(() => {
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          this.latitude = position.coords.latitude;
+          this.longitude = position.coords.longitude;
+          this.zoom = 8;
+          if (this.getAddress(this.latitude, this.longitude)) {
+            this.router.navigateByUrl('/home/accueil/cinema', {
+              state: {
+                lat: this.latitude,
+                lng: this.longitude,
+                around: true
+              }
+            })
+            // this.navigateAround()
+          }
+        }, (positionError) => {
+          console.log(positionError)
+          this.errorForm = 'Nous ne pouvons pas connaitre votre position, vérifiez dans vos paramètres.'
+        })
+      }
+    })
+  }
 
   async openModalAddMovie() {
     const modal = await this.modalCtrl.create({

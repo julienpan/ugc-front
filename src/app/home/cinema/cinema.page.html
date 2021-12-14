@@ -13,6 +13,9 @@
 <ion-content>
 
   <ion-segment (ionChange)="segmentChanged($event)" [value]="segmentForm">
+    <ion-segment-button *ngIf="isAround == true" [value]="form[6].value" [disabled]="form[6].disable">
+      <ion-label>A proximité</ion-label>
+    </ion-segment-button>
     <ion-segment-button [value]="form[0].value" [disabled]="form[0].disable">
       <ion-label>Tous</ion-label>
     </ion-segment-button>
