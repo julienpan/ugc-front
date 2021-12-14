@@ -17,6 +17,7 @@ import { ModalController } from '@ionic/angular';
 import { ModalAddCinemaPage } from 'src/app/components/modal-add-cinema/modal-add-cinema.page';
 import { AdminService } from 'src/app/services/admin.service';
 import { take } from 'rxjs/operators';
+import { AgmCoreModule, MapsAPILoader } from "@agm/core";
 
 @Component({
   selector: 'app-cinema',
@@ -65,6 +66,8 @@ export class CinemaPage implements OnInit {
   cinemaListNantes = [];
   cinemaListToulouse = [];
 
+  cinemaListAround = [];
+
   isAdmin : boolean = false;
 
   isAround : boolean = false;
@@ -75,20 +78,13 @@ export class CinemaPage implements OnInit {
     private firestore: AngularFirestore,
     private modalCtrl: ModalController,
     private adminService: AdminService,
+    private mapsAPILoader: MapsAPILoader,
     ) {}
 
   ngOnInit() {
 
-    this.isAround = history.state.around != null ? history.state.around : false;
-    this.latitude = history.state.lat != null ? history.state.lat : 0;
-    this.longitude = history.state.lng != null ? history.state.lng : 0;
-
-    if(this.isAround == true) {
-      this.segmentForm = 'AROUND';
-      console.log(this.latitude, this.longitude);
-    }
-    
     this.getAllCinema();
+
     if(localStorage.getItem('admin') != null) {
       this.isAdmin = true;
       console.log('Mode admin');
@@ -96,11 +92,37 @@ export class CinemaPage implements OnInit {
       this.isAdmin = false;
       console.log('Mode User');
     }
+
+    this.isAround = history.state.around != null ? history.state.around : false;
+    this.latitude = history.state.lat != null ? history.state.lat : 0;
+    this.longitude = history.state.lng != null ? history.state.lng : 0;
+
+    console.log(this.isAround, this.latitude, this.longitude);
+    if(this.isAround == true) {
+      this.segmentForm = 'AROUND';
+    }
   }
 
-  // refresh() {
-  //   this.getAllCinema;
-  // }
+  calculateDistance(cinemaList) {
+    cinemaList.forEach(r => {
+      if(r.address.latitude != 0 && r.address.longitude != 0) {
+        // console.log('LOCATION POSSIBLE :', r);
+
+        this.mapsAPILoader.load().then(() => {
+          const location1 = new google.maps.LatLng(r.address.latitude, r.address.longitude);
+          const location2 = new google.maps.LatLng(this.latitude, this.longitude);
+  
+          let distance = google.maps.geometry.spherical.computeDistanceBetween(location1, location2);
+          distance = distance / 1000;
+          // console.log('NAME : ', r.name, 'DISTANCE : ', distance.toFixed(1));
+          if(parseFloat(distance.toFixed(1)) <= 30.0) {
+            // console.log(r);
+            this.cinemaListAround.push(r);
+          }
+        })
+      }
+    })
+  }
 
   getAllCinema() {
     this.cinema = this.firestore.collection('cinema').valueChanges({idField: 'customId'}).pipe(take(1))
@@ -123,9 +145,14 @@ export class CinemaPage implements OnInit {
           this.cinemaListToulouse.push(r2);
         }
       });
-    });
+    }).then(() => {
+      console.log('CINEMA LIST', this.cinemaList);
+      if(this.isAround == true) {
+        this.calculateDistance(this.cinemaList);
+      }
+    })
     this.cinemaList.pop();
-    console.log('CINEMA LIST', this.cinemaList);
+
   }
 
   async openModalAddCinema() {

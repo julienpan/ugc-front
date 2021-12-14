@@ -29,7 +29,7 @@ import { FirebaseService } from './services/firebase.service';
     AngularFirestoreModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDRR_3xXZVJZAI3ev3ndcxgavcSNFo5mSA',
-      libraries: ['places']
+      libraries: ['places', 'geometry']
     }),
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, FirebaseService],

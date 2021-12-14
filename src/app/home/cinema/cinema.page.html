@@ -38,6 +38,23 @@
 
   <ion-list>
 
+    <ion-grid *ngIf="segmentForm == 'AROUND' && isAround == true">
+      <ion-row style="height: 250px; border-bottom: 1px solid black;" *ngFor="let cinema of cinemaListAround">
+        <div style="display: flex; width: 100%;">
+          <ion-col size="4"
+            style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <img src="./assets/icon/ugc.png" alt="">
+          </ion-col>
+          <ion-col>
+            <div id="info">
+              <ion-title>{{cinema.name}}</ion-title>
+              <ion-text>{{cinema.address.fullAddress}}</ion-text>
+            </div>
+          </ion-col>
+        </div>
+      </ion-row>
+    </ion-grid>
+
     <ion-grid *ngIf="segmentForm == 'TOUS'">
       <ion-row style="height: 250px; border-bottom: 1px solid black;" *ngFor="let cinema of cinemaList">
         <div style="display: flex; width: 100%;">
