@@ -1,7 +1,6 @@
 import { CinemaList } from "./cinema-list";
 
 export interface MovieList {
-
     id?: string,
     name?: string,
     releaseDate?: string,

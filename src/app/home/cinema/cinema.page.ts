@@ -74,24 +74,25 @@ export class CinemaPage implements OnInit {
   cinemaListNantes = [];
   cinemaListToulouse = [];
 
-  cinemaListAround : CinemaList[] = [
-    {
-      name: '',
-      movieList: [],
-      image: '',
-      distance: '',
-      address: {
-        fullAddress: '',
-        street: '',
-        street_2: '',
-        city: '',
-        country: '',
-        zipCode: '',
-        latitude: 0,
-        longitude: 0,
-      },
-    },
-  ];
+  cinemaListAround : CinemaList[] = [];
+  // = [
+  //   {
+  //     name: '',
+  //     movieList: [],
+  //     image: '',
+  //     distance: '',
+  //     address: {
+  //       fullAddress: '',
+  //       street: '',
+  //       street_2: '',
+  //       city: '',
+  //       country: '',
+  //       zipCode: '',
+  //       latitude: 0,
+  //       longitude: 0,
+  //     },
+  //   },
+  // ];
 
   isAdmin : boolean = false;
 

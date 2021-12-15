@@ -13,6 +13,8 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { MapsAPILoader } from '@agm/core';
 import { MovieList } from 'src/app/interfaces/movie-list';
 import { AddressForm } from 'src/app/interfaces/address-form';
+import { CinemaList } from 'src/app/interfaces/cinema-list';
+
 
 
 @Component({
@@ -28,20 +30,21 @@ export class FilmsPage implements OnInit {
   movieRef: AngularFirestoreCollection<any>;
   movie: Observable<any[]>;
 
-  movieList : MovieList[] = [{
-    id: '',
-    name: '',
-    releaseDate: '',
-    genres: [],
-    note: 0,
-    duration: '',
-    producerName: '',
-    synopsis: '',
-    image: '',
-    trailer: '',
-    cinemaList: [],
-    type: '',
-  }]
+  movieList : MovieList[] = [];
+  // = [{
+  //   id: '',
+  //   name: '',
+  //   releaseDate: '',
+  //   genres: [],
+  //   note: 0,
+  //   duration: '',
+  //   producerName: '',
+  //   synopsis: '',
+  //   image: '',
+  //   trailer: '',
+  //   cinemaList: [],
+  //   type: '',
+  // }]
 
   recommendedMovieList = [];
   basicMovieList = [];
@@ -71,16 +74,17 @@ export class FilmsPage implements OnInit {
 
   errorForm = '';
 
-  addressForm : AddressForm = {
-    city: '',
-    country: '',
-    fullAddress: '',
-    latitude: 0,
-    longitude: 0,
-    street: '',
-    street_2: '',
-    zipCode: ''
-  }
+  addressForm : AddressForm;
+  // = {
+  //   city: '',
+  //   country: '',
+  //   fullAddress: '',
+  //   latitude: 0,
+  //   longitude: 0,
+  //   street: '',
+  //   street_2: '',
+  //   zipCode: ''
+  // }
 
   @ViewChild("mySlides") slides: IonSlides;
   @ViewChild("mySlides2") slides2: IonSlides;
