@@ -13,7 +13,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-width: 1000px;">
+  max-width: 1000px;
+  max-height: 500px;">
     <ion-row>
       <ion-col size="4" style="display: flex;
       align-items: center;
@@ -25,7 +26,7 @@
       text-align: justify;">
         <ion-row>
           <ion-col>
-            <ion-texte style="font-weight: bold; font-size: 30px;">{{movie.name}}</ion-texte>
+            <ion-text style="font-weight: bold; font-size: 30px;">{{movie.name}}</ion-text>
           </ion-col>
         </ion-row>
 
@@ -62,10 +63,20 @@
         <ion-row>
           <ion-col style="position: absolute;
           bottom: 0px;">
-            <ion-button color="danger">Où voir ce film ?</ion-button>
+            <ion-button color="danger" (click)="getCinemaAvailable(movie.cinemaList)">Où voir ce film ?</ion-button>
           </ion-col>
         </ion-row>
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <ion-grid *ngIf="cinemaList">
+    <ion-row *ngFor="let cinema of cinemaList">
+      <ion-col>
+        <ion-text>{{cinema}}</ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
 </ion-content>

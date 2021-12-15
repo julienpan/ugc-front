@@ -16,11 +16,6 @@
       ></ion-input>
     </ion-item>
 
-    <!-- <ion-item>
-      <ion-label position="floating"><b>Adresse</b></ion-label>
-      <ion-input placeholder="Entrer l'adresse"></ion-input>
-    </ion-item> -->
-
     <ion-list-header style="font-weight: bold;
     font-size: 16px;">Adresse</ion-list-header>
     <ion-item lines="full">
@@ -31,6 +26,19 @@
             [value]="cinemaForm.addressForm.fullAddress"
         >
     </ion-item>
+
+    <ion-item>
+      <ion-label><b>Image</b></ion-label>
+      <input type="file"
+      id="file"
+      #userPhoto
+      (change)="onFileSelected($event)"
+      name="image"
+      autocomplete="off"
+      />
+    </ion-item>
+
+    
 
 
   </ion-list>

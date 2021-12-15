@@ -44,9 +44,14 @@ export class CinemaPage implements OnInit {
   cinemaRef: AngularFirestoreCollection<any>;
   cinema: Observable<any[]>;
 
+  movieRef: AngularFirestoreCollection<any>;
+  movie: Observable<any[]>;
+
   cinemaList = [
     {
       name: '',
+      image: '',
+      movieList: [],
       address: {
         fullAddress: '',
         street: '',
@@ -128,11 +133,14 @@ export class CinemaPage implements OnInit {
     this.cinema = this.firestore.collection('cinema').valueChanges({idField: 'customId'}).pipe(take(1))
     this.cinema.forEach((r) => {
       r.forEach((r2) => {
-        console.log('ID : ', r2.customId);
+
         this.cinemaList.push({
           name: r2.name,
           address: r2.address,
+          image: r2.image,
+          movieList: this.getMovieByCinema(r2),
         });
+
         if(r2.address.fullAddress.includes('Paris')) {
           this.cinemaListParis.push(r2);
         } else if(r2.address.fullAddress.includes('Bordeaux')) {
@@ -152,8 +160,26 @@ export class CinemaPage implements OnInit {
       }
     })
     this.cinemaList.pop();
-
   }
+
+  getMovieByCinema(cinema) : any[] {
+    let movieListMatched = [];
+    console.log(cinema);
+    this.movie = this.firestore.collection('movie').valueChanges();
+    this.movie.forEach(r => {
+      r.forEach(r2 => {
+        // console.log(r2);
+        r2.cinemaList.forEach(r3 => {
+          if(cinema.name == r3) {
+            if(!movieListMatched.includes(r2.name)) {
+              movieListMatched.push(r2.name);
+            }
+          }
+        })
+      })
+    })
+    return movieListMatched;
+  } 
 
   async openModalAddCinema() {
     const modal = await this.modalCtrl.create({
