@@ -143,7 +143,7 @@ export class CinemaPage implements OnInit {
           let distance = google.maps.geometry.spherical.computeDistanceBetween(location1, location2);
           distance = distance / 1000;
           // console.log('NAME : ', r.name, 'DISTANCE : ', distance.toFixed(1));
-          if(parseFloat(distance.toFixed(1)) <= 100) {
+          if(parseFloat(distance.toFixed(1)) <= 30.0) {
             // console.log(r);
             this.cinemaListAround.push(r);
             console.log(this.cinemaListAround);
