@@ -33,6 +33,14 @@ export class MovieDetailPage implements OnInit {
 
   goToCinemaPage(cinema) {
     console.log(cinema);
+    cinema = cinema.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    console.log(cinema);
+    
+    // this.router.navigateByUrl(`/home/accueil/cinema/cinema-detail/${cinema}`, {
+    //   state: {
+    //     cinema: cinema,
+    //   }
+    // });
   }
 
 }

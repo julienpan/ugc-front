@@ -87,7 +87,7 @@
       <ion-item>
         <ion-label position="floating"><b>Genres et préférences</b></ion-label>
         <ion-select multiple="true" cancelText="Retour" okText="Valider" [(ngModel)]="prefSelected" [value]="prefSelected" (ionChange)="changePref($event)">
-          <ion-select-option *ngFor="let p of pref" [value]="p.prefName">{{p.prefName}}</ion-select-option>
+          <ion-select-option *ngFor="let genre of genreList" [value]="genre">{{genre}}</ion-select-option>
         </ion-select>
       </ion-item>
 

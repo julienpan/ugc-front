@@ -12,6 +12,12 @@
         </ion-menu-toggle>
 
         <ion-menu-toggle auto-hide="false">
+
+          <ion-item *ngIf="isLoggedIn" lines="none" routerLink="/home/accueil/options" (click)="closeMenu()" routerLinkActive="selected">
+            <ion-icon name="options" slot="start"></ion-icon>
+            <ion-label>Paramètres</ion-label>
+          </ion-item>
+
           <ion-item *ngIf="!isLoggedIn" lines="none" routerLink="/login" (click)="closeMenu()" routerLinkActive="selected">
             <ion-icon name="person" slot="start"></ion-icon>
             <ion-label>Connexion</ion-label>

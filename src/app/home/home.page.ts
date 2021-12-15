@@ -12,7 +12,6 @@ export class HomePage implements OnInit {
   public menu: string;
   segment: 'films' | 'cinemas' = 'films';
 
-
   constructor(
     private activatedRoute: ActivatedRoute,
     public afDB: AngularFireDatabase

@@ -61,8 +61,9 @@ export class LoginPage implements OnInit {
 
   isSignedIn = false;
 
-  // @Output() isLogout = new EventEmitter<any>();
-
+  genreRef: AngularFirestoreCollection<any>;
+  genre: Observable<any[]>;
+  genreList = [];
 
   constructor(    
     private activatedRoute: ActivatedRoute,
@@ -80,6 +81,21 @@ export class LoginPage implements OnInit {
       this.isSignedIn = false;
     }
     // this.getUsers()
+    this.getAllGenre();
+  }
+
+  getAllGenre() {
+    // console.log('GET ALL GENRE');
+    this.genre = this.firestore.collection('genres').valueChanges();
+    this.genre.forEach(r => {
+      r.forEach(r2 => {
+        r2.genresList.forEach(r3 => {
+          if(!this.genreList.includes(r3)) {
+            this.genreList.push(r3);
+          }
+        })
+      })
+    })
   }
 
   async onRegister(email: string, password: string) {

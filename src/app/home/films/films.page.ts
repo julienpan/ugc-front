@@ -115,7 +115,6 @@ export class FilmsPage implements OnInit {
   }
 
   ngOnInit() {
-
     this.mapsAPILoader.load().then(() => {
       this.geoCoder = new google.maps.Geocoder;
     }).catch(e => {
@@ -140,6 +139,7 @@ export class FilmsPage implements OnInit {
     } else {
       this.slideOpts.slidesPerView = 3.5;
     }
+  
     this.getAllMovies();
     this.getAllGenre();
   }
@@ -215,21 +215,20 @@ export class FilmsPage implements OnInit {
             // console.log(r2);
             console.log('USER TROUVER', r2.email)
             r2.preferences.forEach(r3 => {
-              this.prefList.push(r3);
+              if(!this.prefList.includes(r3)) {
+                this.prefList.push(r3);
+              }
               console.log('LISTE DES PREFERENCES', this.prefList);
-
               this.movieList.forEach(r => {
                 r.genres.forEach(r2 => {
                   if(r2.toLowerCase() == r3.toLowerCase()) {
-
-                    console.log('PREFERENCES ET FILM TROUVE', r);
-
+                    // console.log('PREFERENCES ET FILM TROUVE', r);
                     if(!this.recommendedMovieList.includes(r)) {            
-                      console.log(r);      
+                      // console.log(r);      
                       this.firestorage.ref(`movieImages/${r.name.toLowerCase()}.jpeg`).getDownloadURL().forEach(r4 => {
-                        console.log(r4);
+                        // console.log(r4);
                         this.recommendedMovieList.forEach(r5 => {
-                          console.log(r5);
+                          // console.log(r5);
                           if(r5.name == r.name) {
                             r5.image = r4;
                           }
@@ -238,7 +237,7 @@ export class FilmsPage implements OnInit {
                         console.log('Aucune image pour : ', r, 'ERROR :', e);
                       })
                       this.recommendedMovieList.push(r);
-                      console.log(this.recommendedMovieList);
+                      // console.log(this.recommendedMovieList);
                     }
                   }
                 })

@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Paramètres</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list style="margin-bottom: 50px;">
+    <ion-item *ngFor="let genre of genreList">
+      <ion-label>{{genre.value}}</ion-label>
+      <ion-checkbox slot="end" [(ngModel)]="genre.checked"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-button expand="full" shape="round" (click)="save()">Enregistrer</ion-button>
+</ion-footer>
