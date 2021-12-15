@@ -1,16 +1,10 @@
+import { AddressForm } from "./address-form";
+import { MovieList } from "./movie-list";
+
 export interface CinemaList {
     name?: string,
-    movieList?: any,
+    movieList?: MovieList[],
     image?: string,
     distance?: string,
-    address?: {
-        fullAddress: string,
-        street: string,
-        street_2: string,
-        city: string,
-        country: string,
-        zipCode: string,
-        latitude: number,
-        longitude: number,
-    }
+    address?: AddressForm
 }

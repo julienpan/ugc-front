@@ -11,6 +11,8 @@ import { AdminService } from 'src/app/services/admin.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { MapsAPILoader } from '@agm/core';
+import { MovieList } from 'src/app/interfaces/movie-list';
+import { AddressForm } from 'src/app/interfaces/address-form';
 
 
 @Component({
@@ -26,7 +28,7 @@ export class FilmsPage implements OnInit {
   movieRef: AngularFirestoreCollection<any>;
   movie: Observable<any[]>;
 
-  movieList = [{
+  movieList : MovieList[] = [{
     id: '',
     name: '',
     releaseDate: '',
@@ -69,7 +71,7 @@ export class FilmsPage implements OnInit {
 
   errorForm = '';
 
-  addressForm = {
+  addressForm : AddressForm = {
     city: '',
     country: '',
     fullAddress: '',
