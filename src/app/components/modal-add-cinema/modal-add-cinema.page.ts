@@ -28,20 +28,19 @@ export class ModalAddCinemaPage implements OnInit {
       longitude: 0,
     },
     name: '',
-    image: '',
     movieList: [],
   }
 
   // cinemaRef: AngularFirestoreCollection<any>;
   cinema: Observable<any[]>;
 
-  // title = "cloudsSorage";
-  // fb : any;
-  // selectedFile: File = null;
-  // downloadURL: Observable<string>;
+  title = "cloudsSorage";
+  fb : any;
+  selectedFile: File = null;
+  downloadURL: Observable<string>;
 
-  // file : any;
-  // filePath : any;
+  file : any;
+  filePath : any;
 
 
   constructor(
@@ -85,35 +84,34 @@ export class ModalAddCinemaPage implements OnInit {
     });
   }
 
-  // onFileSelected(event) {
-  //   this.file = event.target.files[0];
-  //   this.filePath = `movieImages/${this.file.name.toLowerCase()}`;
-  // }
+  onFileSelected(event) {
+    this.file = event.target.files[0];
+    this.filePath = `cinemaImages/${this.file.name.toLowerCase()}`;
+  }
 
   addCinema() {
 
-    // const fileRef = this.firestorage.ref(this.filePath);
-    // const task = this.firestorage.upload(`cinemaImages/${this.file.name.toLowerCase()}`, this.file);
-    // console.log(task);
-    // task.snapshotChanges().pipe(finalize(() => {
-    //   this.downloadURL = fileRef.getDownloadURL();
-    //   this.downloadURL.subscribe(url => {
-    //     if (url) {
-    //       this.fb = url;
-    //     }
-    //   console.log(this.fb);
-    //   });
-    // })).subscribe(url => {
-    //   if (url) {
-    //     console.log(url);
-    //   }
-    // });
+    const fileRef = this.firestorage.ref(this.filePath);
+    const task = this.firestorage.upload(`cinemaImages/${this.file.name.toLowerCase()}`, this.file);
+    console.log(task);
+    task.snapshotChanges().pipe(finalize(() => {
+      this.downloadURL = fileRef.getDownloadURL();
+      this.downloadURL.subscribe(url => {
+        if (url) {
+          this.fb = url;
+        }
+      console.log(this.fb);
+      });
+    })).subscribe(url => {
+      if (url) {
+        console.log(url);
+      }
+    });
 
     const cinemaRef = this.firestore.collection('cinema');
     cinemaRef.doc(this.cinemaForm.name).set({
       name: this.cinemaForm.name,
       address: this.cinemaForm.addressForm,
-      image: this.cinemaForm.image,
       movieList: this.cinemaForm.movieList,
     })
     this.dismissModal();

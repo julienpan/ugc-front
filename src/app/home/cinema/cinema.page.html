@@ -60,7 +60,7 @@
         <div style="display: flex; width: 100%;">
           <ion-col size="4"
             style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-            <img src="./assets/icon/ugc.png" alt="">
+            <img id="cinemaImage" [src]="cinema.image || './assets/icon/ugc.png'" alt="">
           </ion-col>
           <ion-col>
             <div id="info">

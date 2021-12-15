@@ -136,14 +136,13 @@ export class CinemaPage implements OnInit {
     this.cinema = this.firestore.collection('cinema').valueChanges({idField: 'customId'}).pipe(take(1))
     this.cinema.forEach((r) => {
       r.forEach((r2) => {
-        // console.log(r2.name.toLowerCase());
+
         this.firestorage.ref(`cinemaImages/${r2.name.toLowerCase()}.jpeg`).getDownloadURL().forEach(r => {
           // console.log(r);
           r2.image = r;
         }).catch(e => {
           console.log('Aucune image pour : ', r2, 'ERROR :', e);
         })
-
         this.cinemaList.push({
           name: r2.name,
           address: r2.address,
