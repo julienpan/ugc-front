@@ -7,7 +7,15 @@ const routes: Routes = [
   {
     path: '',
     component: FilmsPage
-  }
+  },
+  {
+    path: 'detail',
+    loadChildren: () => import('./movie-detail/movie-detail.module').then( m => m.MovieDetailPageModule)
+  },
+  {
+    path: 'detail/:id',
+    loadChildren: () => import('./movie-detail/movie-detail.module').then( m => m.MovieDetailPageModule)
+  },
 ];
 
 @NgModule({

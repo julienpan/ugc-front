@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{movie.name}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid style="width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 1000px;">
+    <ion-row>
+      <ion-col size="4" style="display: flex;
+      align-items: center;
+      justify-content: center;">
+        <img [src]="movie.image" alt="movie.name">
+      </ion-col>
+      <ion-col size="8" style="display: flex;
+      flex-direction: column;
+      text-align: justify;">
+        <ion-row>
+          <ion-col>
+            <ion-texte style="font-weight: bold; font-size: 30px;">{{movie.name}}</ion-texte>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-text>Sortie le <b>{{movie.releaseDate}}</b></ion-text>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-text>{{movie.genres}} ({{movie.duration}})</ion-text>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-text>De <b>{{movie.producerName}}</b></ion-text>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-text><b>Synopsis</b></ion-text>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-text>{{movie.synopsis}}</ion-text>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col style="position: absolute;
+          bottom: 0px;">
+            <ion-button color="danger">Où voir ce film ?</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

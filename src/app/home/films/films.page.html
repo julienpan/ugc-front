@@ -1,14 +1,14 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-text style="font-size: 20px; font-weight: bold;" color="primary">Les films</ion-text>
+  <ion-toolbar color="primary">
+    <ion-text style="font-size: 20px; font-weight: bold;">Les films</ion-text>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="home/accueil"></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="end" *ngIf="isAdmin">
-      <ion-button fill="outline" color="primary" (click)="openModalAddMovie()">Ajouter</ion-button>
-      <ion-button *ngIf="!deleteMode" fill="outline" color="danger" (click)="deleteMode = !deleteMode">Supprimer
+      <ion-button fill="outline" (click)="openModalAddMovie()" shape="round">Ajouter</ion-button>
+      <ion-button *ngIf="!deleteMode" fill="outline" shape="round" color="danger" (click)="deleteMode = !deleteMode">Supprimer
       </ion-button>
-      <ion-button *ngIf="deleteMode" fill="outline" color="danger" (click)="deleteMode = !deleteMode">Annuler
+      <ion-button *ngIf="deleteMode" fill="outline" shape="round" color="danger" (click)="deleteMode = !deleteMode">Annuler
       </ion-button>
 
     </ion-buttons>
@@ -68,7 +68,7 @@
               </div>
               <img style="width: 100%; height: 100%" src="./assets/icon/ugcMovie.jpeg">
             </div>
-            <div id="title">
+            <div id="title" (click)="navigateToMovieDetail(movie)">
               <ion-text>{{movie.name}}</ion-text>
               <ion-icon name="close-circle" size="large" color="danger" *ngIf="deleteMode" (click)="deleteMovie(movie)">
               </ion-icon>
@@ -101,7 +101,7 @@
               </div>
               <img style="width: 100%; height: 100%" src="./assets/icon/ugcMovie.jpeg">
             </div>
-            <div id="title">
+            <div id="title" (click)="navigateToMovieDetail(movie)">
               <ion-text>{{movie.name}}</ion-text>
               <ion-icon name="close-circle" size="large" color="danger" *ngIf="deleteMode" (click)="deleteMovie(movie)">
               </ion-icon>
@@ -134,7 +134,7 @@
               </div>
               <img style="width: 100%; height: 100%" src="./assets/icon/ugcMovie.jpeg">
             </div>
-            <div id="title">
+            <div id="title" (click)="navigateToMovieDetail(movie)">
               <ion-text>{{movie.name}}</ion-text>
               <ion-icon name="close-circle" size="large" color="danger" *ngIf="deleteMode" (click)="deleteMovie(movie)">
               </ion-icon>
@@ -165,7 +165,7 @@
               </div>
               <img style="width: 100%; height: 100%" src="./assets/icon/ugcMovie.jpeg">
             </div>
-            <div id="title">
+            <div id="title" (click)="navigateToMovieDetail(movie)">
               <ion-text>{{movie.name}}</ion-text>
               <ion-icon name="close-circle" size="large" color="danger" *ngIf="deleteMode" (click)="deleteMovie(movie)">
               </ion-icon>
@@ -196,7 +196,7 @@
               </div>
               <img style="width: 100%; height: 100%" src="./assets/icon/ugcMovie.jpeg">
             </div>
-            <div id="title">
+            <div id="title" (click)="navigateToMovieDetail(movie)">
               <ion-text>{{movie.name}}</ion-text>
               <ion-icon name="close-circle" size="large" color="danger" *ngIf="deleteMode" (click)="deleteMovie(movie)">
               </ion-icon>

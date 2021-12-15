@@ -252,12 +252,24 @@ export class FilmsPage implements OnInit {
       console.log(e);
     })
     this.movieList.pop();
-    // console.log('movie LIST', this.movieList);
+    console.log('movie LIST', this.movieList);
     // console.log('NEW : ', this.newMovieList);
     // console.log('PREVIEW : ', this.previewMovieList);
     // console.log('FRONT : ', this.frontMovieList);
     // console.log('BASIC : ', this.basicMovieList);
 
+  }
+
+  navigateToMovieDetail(movie) {
+    let id = movie.name.toLowerCase();
+    id = movie.name.replace(/\s*/g, "");
+    id = movie.name.replace(/\W/g, "");
+    console.log(id);
+    this.router.navigateByUrl(`/home/accueil/films/detail/${id}`, {
+      state: {
+        movie: movie
+      }
+    });
   }
 
 
