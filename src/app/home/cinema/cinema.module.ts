@@ -7,13 +7,18 @@ import { IonicModule } from '@ionic/angular';
 import { CinemaPageRoutingModule } from './cinema-routing.module';
 
 import { CinemaPage } from './cinema.page';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CinemaPageRoutingModule
+    CinemaPageRoutingModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDRR_3xXZVJZAI3ev3ndcxgavcSNFo5mSA',
+      libraries: ['places', 'geometry']
+    }),
   ],
   declarations: [CinemaPage]
 })

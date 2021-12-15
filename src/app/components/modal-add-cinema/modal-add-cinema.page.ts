@@ -113,7 +113,6 @@ export class ModalAddCinemaPage implements OnInit {
     cinemaRef.doc(this.cinemaForm.name).set({
       name: this.cinemaForm.name,
       address: this.cinemaForm.addressForm,
-      movieList: this.cinemaForm.movieList,
     })
     this.dismissModal();
   }

@@ -1,16 +1,18 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-text style="font-size: 20px; font-weight: bold;">Les films</ion-text>
-    <ion-buttons slot="start">
+    <ion-text style="font-size: 20px; font-weight: bold; padding-left: 20px">Les films</ion-text>
+    <!-- <ion-buttons slot="start">
       <ion-back-button defaultHref="home/accueil"></ion-back-button>
-    </ion-buttons>
+    </ion-buttons> -->
     <ion-buttons slot="end" *ngIf="isAdmin">
       <ion-button fill="outline" (click)="openModalAddMovie()" shape="round">Ajouter</ion-button>
       <ion-button *ngIf="!deleteMode" fill="outline" shape="round" color="danger" (click)="deleteMode = !deleteMode">Supprimer
       </ion-button>
       <ion-button *ngIf="deleteMode" fill="outline" shape="round" color="danger" (click)="deleteMode = !deleteMode">Annuler
       </ion-button>
-
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -47,14 +49,14 @@
       </ion-button>
     </div>
 
-    <div id="section" *ngIf="recommendedMovieList.lenght > 0">
+    <div id="section" *ngIf="recommendedMovieList.length > 0">
       <ion-item lines="none" color="primary">
         <ion-text>Recommandations</ion-text>
         <ion-button slot="end" fill="clear" color="light">Tout voir</ion-button>
       </ion-item>
     </div>
 
-    <div id="newMovie" *ngIf="recommendedMovieList.lenght > 0">
+    <div id="newMovie" *ngIf="recommendedMovieList.length > 0">
       <ion-slides [options]="slideOpts" pager="true">
         <ion-slide *ngFor="let movie of recommendedMovieList">
           <div id="movie">

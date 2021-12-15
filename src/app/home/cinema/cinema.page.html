@@ -1,11 +1,12 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-text style="font-size: 20px; font-weight: bold;" color="primary">Les cinémas</ion-text>
+  <ion-toolbar color="primary">
+    <ion-text style="font-size: 20px; font-weight: bold;" color="light">Les cinémas</ion-text>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="home/accueil"></ion-back-button>
+      <ion-back-button defaultHref="home/accueil/films"></ion-back-button>
     </ion-buttons>
-    <ion-buttons slot="end" *ngIf="isAdmin">
-      <ion-button fill="outline" color="primary" (click)="openModalAddCinema()">Ajouter un cinéma</ion-button>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="isAdmin" fill="outline" color="light" (click)="openModalAddCinema()">Ajouter un cinéma</ion-button>
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -38,33 +39,9 @@
 
   <ion-list>
 
-    <ion-grid *ngIf="segmentForm == 'AROUND' && isAround == true">
+    <ion-grid *ngIf="segmentForm == 'AROUND'">
       <ion-row style="height: 150px; border-bottom: 1px solid black;" *ngFor="let cinema of cinemaListAround">
-        <div style="display: flex; width: 100%;">
-          <ion-col size="4"
-            style="height: 150px;display: flex; flex-direction: column; justify-content: center; align-items: center;">
-            <div style="width: 100%;
-    height: 100%;">
-              <img style="width: auto;
-    height: 100%;" src="./assets/icon/ugc.png" alt="">
-            </div>
-          </ion-col>
-          <ion-col style="display: flex;
-    justify-content: flex-start;
-    align-items: center;">
-            <div id="info">
-              <ion-text>{{cinema.name}}</ion-text>
-              <ion-text>{{cinema.address.fullAddress}}</ion-text>
-              <ion-text><b>{{cinema.distance}}</b>km</ion-text>
-            </div>
-          </ion-col>
-        </div>
-      </ion-row>
-    </ion-grid>
-
-    <ion-grid *ngIf="segmentForm == 'TOUS'">
-      <ion-row style="height: 150px; border-bottom: 1px solid black;" *ngFor="let cinema of cinemaList">
-        <div style="display: flex; width: 100%;">
+        <div style="display: flex; width: 100%; cursor: pointer;" (click)="getCinemaDetail(cinema)">
           <ion-col size="4"
             style="height: 150px;display: flex; flex-direction: column; justify-content: center; align-items: center;">
             <div style="width: 100%;
@@ -74,7 +51,54 @@
             </div>
           </ion-col>
           <ion-col style="display: flex;
-    justify-content: flex-start;
+    justify-content: flex;
+    align-items: center;">
+            <div id="info">
+              <ion-text>{{cinema.name}}</ion-text>
+              <ion-text>{{cinema.address.fullAddress}}</ion-text>
+            </div>
+          </ion-col>
+        </div>
+      </ion-row>
+    </ion-grid>
+
+    <!-- <ion-grid *ngIf="segmentForm == 'AROUND' && isAround == true">
+      <ion-row style="height: 150px; border-bottom: 1px solid black;" *ngFor="let cinema of cinemaListAround">
+        <div style="display: flex; width: 100%; cursor: pointer;" (click)="getCinemaDetail(cinema)">
+          <ion-col size="4"
+            style="height: 150px;display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div style="width: 100%;
+    height: 100%;">
+              <img style="width: auto;
+    height: 100%;" [src]="cinema.image || './assets/icon/ugc.png'" alt="">
+            </div>
+          </ion-col>
+          <ion-col style="display: flex;
+    justify-content: flex;
+    align-items: center;">
+            <div id="info">
+              <ion-text>{{cinema.name}}</ion-text>
+              <ion-text>{{cinema.address.fullAddress}}</ion-text>
+              <ion-text><b>{{cinema.distance}}</b>km</ion-text>
+            </div>
+          </ion-col>
+        </div>
+      </ion-row>
+    </ion-grid> -->
+
+    <ion-grid *ngIf="segmentForm == 'TOUS'">
+      <ion-row style="height: 150px; border-bottom: 1px solid black;" *ngFor="let cinema of cinemaList">
+        <div style="display: flex; width: 100%; cursor: pointer;" (click)="getCinemaDetail(cinema)">
+          <ion-col size="4"
+            style="height: 150px;display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div style="width: 100%;
+    height: 100%;">
+              <img style="width: auto;
+    height: 100%;" [src]="cinema.image || './assets/icon/ugc.png'" alt="">
+            </div>
+          </ion-col>
+          <ion-col style="display: flex;
+    justify-content: flex;
     align-items: center;">
             <div id="info">
               <ion-text>{{cinema.name}}</ion-text>
@@ -87,17 +111,17 @@
 
     <ion-grid *ngIf="segmentForm == 'PARIS'">
       <ion-row style="height: 150px; border-bottom: 1px solid black;" *ngFor="let cinema of cinemaListParis">
-        <div style="display: flex; width: 100%;">
+        <div style="display: flex; width: 100%; cursor: pointer;" (click)="getCinemaDetail(cinema)">
           <ion-col size="4"
             style="height: 150px;display: flex; flex-direction: column; justify-content: center; align-items: center;">
             <div style="width: 100%;
     height: 100%;">
               <img style="width: auto;
-    height: 100%;" src="./assets/icon/ugc.png" alt="">
+    height: 100%;" [src]="cinema.image || './assets/icon/ugc.png'" alt="">
             </div>
           </ion-col>
           <ion-col style="display: flex;
-    justify-content: flex-start;
+    justify-content: flex;
     align-items: center;">
             <div id="info">
               <ion-text>{{cinema.name}}</ion-text>
@@ -110,17 +134,17 @@
 
     <ion-grid *ngIf="segmentForm == 'BORDEAUX'">
       <ion-row style="height: 150px; border-bottom: 1px solid black;" *ngFor="let cinema of cinemaListBordeaux">
-        <div style="display: flex; width: 100%;">
+        <div style="display: flex; width: 100%; cursor: pointer;" (click)="getCinemaDetail(cinema)">
           <ion-col size="4"
             style="height: 150px;display: flex; flex-direction: column; justify-content: center; align-items: center;">
             <div style="width: 100%;
     height: 100%;">
               <img style="width: auto;
-    height: 100%;" src="./assets/icon/ugc.png" alt="">
+    height: 100%;" [src]="cinema.image || './assets/icon/ugc.png'" alt="">
             </div>
           </ion-col>
           <ion-col style="display: flex;
-    justify-content: flex-start;
+    justify-content: flex;
     align-items: center;">
             <div id="info">
               <ion-text>{{cinema.name}}</ion-text>
@@ -133,17 +157,17 @@
 
     <ion-grid *ngIf="segmentForm == 'Lyon'">
       <ion-row style="height: 150px; border-bottom: 1px solid black;" *ngFor="let cinema of cinemaListLyon">
-        <div style="display: flex; width: 100%;">
+        <div style="display: flex; width: 100%; cursor: pointer;" (click)="getCinemaDetail(cinema)">
           <ion-col size="4"
             style="height: 150px;display: flex; flex-direction: column; justify-content: center; align-items: center;">
             <div style="width: 100%;
     height: 100%;">
               <img style="width: auto;
-    height: 100%;" src="./assets/icon/ugc.png" alt="">
+    height: 100%;" [src]="cinema.image || './assets/icon/ugc.png'" alt="">
             </div>
           </ion-col>
           <ion-col style="display: flex;
-    justify-content: flex-start;
+    justify-content: flex;
     align-items: center;">
             <div id="info">
               <ion-text>{{cinema.name}}</ion-text>
@@ -156,17 +180,17 @@
 
     <ion-grid *ngIf="segmentForm == 'Nantes'">
       <ion-row style="height: 150px; border-bottom: 1px solid black;" *ngFor="let cinema of cinemaListNantes">
-        <div style="display: flex; width: 100%;">
+        <div style="display: flex; width: 100%; cursor: pointer;" (click)="getCinemaDetail(cinema)">
           <ion-col size="4"
             style="height: 150px;display: flex; flex-direction: column; justify-content: center; align-items: center;">
             <div style="width: 100%;
     height: 100%;">
               <img style="width: auto;
-    height: 100%;" src="./assets/icon/ugc.png" alt="">
+    height: 100%;" [src]="cinema.image || './assets/icon/ugc.png'" alt="">
             </div>
           </ion-col>
           <ion-col style="display: flex;
-    justify-content: flex-start;
+    justify-content: flex;
     align-items: center;">
             <div id="info">
               <ion-text>{{cinema.name}}</ion-text>
@@ -179,17 +203,17 @@
 
     <ion-grid *ngIf="segmentForm == 'Toulouse'">
       <ion-row style="height: 150px; border-bottom: 1px solid black;" *ngFor="let cinema of cinemaListToulouse">
-        <div style="display: flex; width: 100%;">
+        <div style="display: flex; width: 100%; cursor: pointer;" (click)="getCinemaDetail(cinema)">
           <ion-col size="4"
             style="height: 150px;display: flex; flex-direction: column; justify-content: center; align-items: center;">
             <div style="width: 100%;
     height: 100%;">
               <img style="width: auto;
-    height: 100%;" src="./assets/icon/ugc.png" alt="">
+    height: 100%;" [src]="cinema.image || './assets/icon/ugc.png'" alt="">
             </div>
           </ion-col>
           <ion-col style="display: flex;
-    justify-content: flex-start;
+    justify-content: flex;
     align-items: center;">
             <div id="info">
               <ion-text>{{cinema.name}}</ion-text>

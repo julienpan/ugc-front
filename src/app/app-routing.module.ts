@@ -27,6 +27,7 @@ const routes: Routes = [
     path: 'modal-add-movie',
     loadChildren: () => import('./components/modal-add-movie/modal-add-movie.module').then( m => m.ModalAddMoviePageModule)
   },
+  
   // {
   //   path: 'home',
   //   loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)

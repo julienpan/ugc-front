@@ -3,7 +3,7 @@ import {
   AngularFireList,
   AngularFireDatabase,
 } from '@angular/fire/compat/database';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import {
   AngularFirestoreModule,
@@ -74,7 +74,7 @@ export class CinemaPage implements OnInit {
   cinemaListNantes = [];
   cinemaListToulouse = [];
 
-  cinemaListAround = [
+  cinemaListAround : CinemaList[] = [
     {
       name: '',
       movieList: [],
@@ -89,8 +89,8 @@ export class CinemaPage implements OnInit {
         zipCode: '',
         latitude: 0,
         longitude: 0,
-      }
-    }
+      },
+    },
   ];
 
   isAdmin : boolean = false;
@@ -104,12 +104,12 @@ export class CinemaPage implements OnInit {
     private modalCtrl: ModalController,
     private adminService: AdminService,
     private mapsAPILoader: MapsAPILoader,
-    private firestorage: AngularFireStorage
+    private firestorage: AngularFireStorage,
+    private router: Router
     ) {}
 
   ngOnInit() {
 
-    this.getAllCinema();
 
     if(localStorage.getItem('admin') != null) {
       this.isAdmin = true;
@@ -123,44 +123,46 @@ export class CinemaPage implements OnInit {
     this.latitude = history.state.lat != null ? history.state.lat : 0;
     this.longitude = history.state.lng != null ? history.state.lng : 0;
 
-    console.log(this.isAround, this.latitude, this.longitude);
+    this.getAllCinema();
+
     if(this.isAround == true) {
       this.segmentForm = 'AROUND';
+      this.calculateDistance(this.cinemaList);
     }
+    console.log(this.isAround, this.latitude, this.longitude);
   }
 
   calculateDistance(cinemaList) {
     cinemaList.forEach(r => {
       if(r.address.latitude != 0 && r.address.longitude != 0) {
-        // console.log('LOCATION POSSIBLE :', r);
 
         this.mapsAPILoader.load().then(() => {
           const location1 = new google.maps.LatLng(r.address.latitude, r.address.longitude);
           const location2 = new google.maps.LatLng(this.latitude, this.longitude);
-  
           let distance = google.maps.geometry.spherical.computeDistanceBetween(location1, location2);
           distance = distance / 1000;
           // console.log('NAME : ', r.name, 'DISTANCE : ', distance.toFixed(1));
-          if(parseFloat(distance.toFixed(1)) <= 30.0) {
+          if(parseFloat(distance.toFixed(1)) <= 100) {
             // console.log(r);
-            this.cinemaListAround.push({
-              name: r.name,
-              movieList: r.movieList,
-              image: r.image,
-              distance: distance.toFixed(1),
-              address: {
-                fullAddress: r.address.fullAddress,
-                street: r.address.street,
-                street_2: r.address.street_2,
-                city: r.address.city,
-                country: r.address.country,
-                zipCode: r.address.zipCode,
-                latitude: r.address.latitude,
-                longitude: r.address.longitude,
-              }
-            });
-            this.cinemaListAround.shift();
-            console.log(this.cinemaListAround)
+            this.cinemaListAround.push(r);
+            console.log(this.cinemaListAround);
+            // this.cinemaListAround.push({
+            //   name: r.name,
+            //   movieList: r.movieList,
+            //   image: r.image,
+            //   distance: distance.toFixed(1),
+            //   address: {
+            //     fullAddress: r.address.fullAddress,
+            //     street: r.address.street,
+            //     street_2: r.address.street_2,
+            //     city: r.address.city,
+            //     country: r.address.country,
+            //     zipCode: r.address.zipCode,
+            //     latitude: r.address.latitude,
+            //     longitude: r.address.longitude,
+            //   }
+            // });
+            // this.cinemaListAround.shift();
           }
         })
       }
@@ -168,13 +170,11 @@ export class CinemaPage implements OnInit {
   }
 
   getAllCinema() {
-
     this.cinema = this.firestore.collection('cinema').valueChanges({idField: 'customId'}).pipe(take(1))
     this.cinema.forEach((r) => {
       r.forEach((r2) => {
         r2.name = r2.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
         this.firestorage.ref(`cinemaImages/${r2.name.toLowerCase()}.jpeg`).getDownloadURL().forEach(r => {
-          // console.log(r);
           r2.image = r;
         }).then(() => {
           this.cinemaList.push({
@@ -185,9 +185,6 @@ export class CinemaPage implements OnInit {
             distance: r2.distance
           });
         })
-
-
-
         if(r2.address.fullAddress.includes('Paris')) {
           this.cinemaListParis.push(r2);
         } else if(r2.address.fullAddress.includes('Bordeaux')) {
@@ -201,8 +198,8 @@ export class CinemaPage implements OnInit {
         }
       });
     }).then(() => {
-      console.log('CINEMA LIST', this.cinemaList);
       if(this.isAround == true) {
+        console.log('IS AROUND : ', this.cinemaList);
         this.calculateDistance(this.cinemaList);
       }
     })
@@ -211,7 +208,7 @@ export class CinemaPage implements OnInit {
 
   getMovieByCinema(cinema) : any[] {
     let movieListMatched = [];
-    console.log(cinema);
+    // console.log(cinema);
     this.movie = this.firestore.collection('movie').valueChanges();
     this.movie.forEach(r => {
       r.forEach(r2 => {
@@ -228,32 +225,24 @@ export class CinemaPage implements OnInit {
     return movieListMatched;
   } 
 
+  getCinemaDetail(cinema) {
+    // console.log(cinema);
+    this.router.navigateByUrl(`/home/accueil/cinema/cinema-detail/${cinema.name.toLowerCase()}`, {
+      state: {
+        cinema: cinema
+      }
+    })
+  }
+
   async openModalAddCinema() {
     const modal = await this.modalCtrl.create({
       component: ModalAddCinemaPage,
     });
-    // modal.onDidDismiss().then((data) => {
-    //   if(data.role != 'backdrop') {
-    //     this.refresh();
-    //   }
-    // })
     return await modal.present();
   }
 
   segmentChanged($event) {
     this.segmentForm = $event.detail.value;
-    // this.cinema = this.firestore.collection('cinema').valueChanges({idField: 'customId'}).pipe(take(1))
-    // this.cinema.forEach((r) => {
-    //   r.forEach((r2) => {
-    //     console.log('ID : ', r2.customId);
-    //     this.cinemaList.push({
-    //       name: r2.name,
-    //       address: r2.address,
-    //     });
-    //   });
-    // });
-    // this.cinemaList.pop();
-    // console.log('CINEMA LIST', this.cinemaList);
 
   }
 }

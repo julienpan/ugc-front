@@ -7,7 +7,16 @@ const routes: Routes = [
   {
     path: '',
     component: CinemaPage
+  },
+  {
+    path: 'cinema-detail',
+    loadChildren: () => import('./cinema-detail/cinema-detail.module').then( m => m.CinemaDetailPageModule)
+  },
+  {
+    path: 'cinema-detail/:id',
+    loadChildren: () => import('./cinema-detail/cinema-detail.module').then( m => m.CinemaDetailPageModule)
   }
+
 ];
 
 @NgModule({

@@ -2,7 +2,7 @@
 export const environment = {
   production: true,
   firebaseConfig: {
-    apiKey: "AIzaSyBcykMGEfg_1HjhCob9lLEnNa9lMcjq9mg",
+    apiKey: "AIzaSyCfxK3KDg5OFIMf9FoEngwVUZ5ciPE5KJQ",
     authDomain: "ugc-front.firebaseapp.com",
     databaseURL: "https://ugc-front-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "ugc-front",

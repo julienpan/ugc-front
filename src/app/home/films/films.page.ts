@@ -214,7 +214,6 @@ export class FilmsPage implements OnInit {
     this.movie = this.firestore.collection('movie').valueChanges({idField: 'customId'}).pipe(take(1))
     this.movie.forEach((r) => {
       r.forEach((r2) => {
-
         this.firestorage.ref(`movieImages/${r2.name.toLowerCase()}.jpeg`).getDownloadURL().forEach(r => {
           // console.log(r);
           r2.image = r;
@@ -237,16 +236,18 @@ export class FilmsPage implements OnInit {
           type: r2.type
         });
 
-        
-        if(r2.type == 'NOUVEAU') {
-          this.newMovieList.push(r2);
-        } else if (r2.type == 'AVANT-PREMIERE') {
-          this.previewMovieList.push(r2);
-        } else if(r2.type == 'EN-AVANT') {
-          this.frontMovieList.push(r2);
-        } else {
-          this.basicMovieList.push(r2);
-        }
+        r2.type.forEach(r => {
+          if(r == 'NOUVEAU') {
+            this.newMovieList.push(r2);
+          } else if (r == 'AVANT-PREMIERE') {
+            this.previewMovieList.push(r2);
+          } else if(r== 'EN-AVANT') {
+            this.frontMovieList.push(r2);
+          } else {
+            this.basicMovieList.push(r2);
+          }
+        })
+      
       });
     }).catch(e => {
       console.log(e);

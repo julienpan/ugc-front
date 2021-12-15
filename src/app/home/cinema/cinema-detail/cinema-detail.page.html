@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-text style="    font-weight: bold;
+    font-size: 22px;">{{cinema.name.toUpperCase()}}</ion-text>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid id="container">
+    <div id="image">
+      <img [src]="cinema.image">
+    </div>
+
+    <div id="info">
+      <ion-label>
+        <ion-text>{{cinema.name.toUpperCase()}}</ion-text>
+      </ion-label>
+      <ion-label>
+        <ion-text>{{cinema.address.fullAddress}}</ion-text>
+      </ion-label>
+    </div>
+  </ion-grid>
+
+  <ion-grid>
+
+    <div id="section" *ngIf="cinema.movieList.length > 0">
+      <ion-item lines="none" color="primary">
+        <ion-text>Les films proposées</ion-text>
+        <ion-button slot="end" fill="clear" color="light">Tout voir</ion-button>
+      </ion-item>
+    </div>
+
+    <div id="newMovie" *ngIf="cinema.movieList.length > 0">
+      <ion-slides [options]="slideOpts" pager="true">
+        <ion-slide *ngFor="let movie of cinema.movieList">
+          <div id="movie">
+            <div id="image">
+              <img id="movieImage" [src]="movie.image" alt="">
+              <div class="overlay">
+                <ion-button fill="clear" style="font-size: 10px;" color="light" (click)="watchTrailer(movie.trailer)">
+                  Voir la bande-annonce
+                  <ion-icon name="play" color="light"></ion-icon>
+                </ion-button>
+              </div>
+              <img style="width: 100%; height: 100%" src="./assets/icon/ugcMovie.jpeg">
+            </div>
+            <div id="title" (click)="navigateToMovieDetail(movie)">
+              <ion-text>{{movie.name}}</ion-text>
+              <ion-icon name="close-circle" size="large" color="danger" *ngIf="deleteMode" (click)="deleteMovie(movie)">
+              </ion-icon>
+            </div>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+  </ion-grid>
+
+</ion-content>
