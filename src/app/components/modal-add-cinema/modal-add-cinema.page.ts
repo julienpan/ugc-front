@@ -92,6 +92,7 @@ export class ModalAddCinemaPage implements OnInit {
   addCinema() {
 
     const fileRef = this.firestorage.ref(this.filePath);
+
     const task = this.firestorage.upload(`cinemaImages/${this.file.name.toLowerCase()}`, this.file);
     console.log(task);
     task.snapshotChanges().pipe(finalize(() => {

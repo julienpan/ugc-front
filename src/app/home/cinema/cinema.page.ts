@@ -19,6 +19,7 @@ import { AdminService } from 'src/app/services/admin.service';
 import { take } from 'rxjs/operators';
 import { AgmCoreModule, MapsAPILoader } from "@agm/core";
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { CinemaList } from 'src/app/interfaces/cinema-list';
 
 @Component({
   selector: 'app-cinema',
@@ -48,11 +49,12 @@ export class CinemaPage implements OnInit {
   movieRef: AngularFirestoreCollection<any>;
   movie: Observable<any[]>;
 
-  cinemaList = [
+  cinemaList : CinemaList[] = [
     {
       name: '',
       movieList: [],
       image: '',
+      distance: '',
       address: {
         fullAddress: '',
         street: '',
@@ -72,7 +74,24 @@ export class CinemaPage implements OnInit {
   cinemaListNantes = [];
   cinemaListToulouse = [];
 
-  cinemaListAround = [];
+  cinemaListAround = [
+    {
+      name: '',
+      movieList: [],
+      image: '',
+      distance: '',
+      address: {
+        fullAddress: '',
+        street: '',
+        street_2: '',
+        city: '',
+        country: '',
+        zipCode: '',
+        latitude: 0,
+        longitude: 0,
+      }
+    }
+  ];
 
   isAdmin : boolean = false;
 
@@ -124,7 +143,24 @@ export class CinemaPage implements OnInit {
           // console.log('NAME : ', r.name, 'DISTANCE : ', distance.toFixed(1));
           if(parseFloat(distance.toFixed(1)) <= 30.0) {
             // console.log(r);
-            this.cinemaListAround.push(r);
+            this.cinemaListAround.push({
+              name: r.name,
+              movieList: r.movieList,
+              image: r.image,
+              distance: distance.toFixed(1),
+              address: {
+                fullAddress: r.address.fullAddress,
+                street: r.address.street,
+                street_2: r.address.street_2,
+                city: r.address.city,
+                country: r.address.country,
+                zipCode: r.address.zipCode,
+                latitude: r.address.latitude,
+                longitude: r.address.longitude,
+              }
+            });
+            this.cinemaListAround.shift();
+            console.log(this.cinemaListAround)
           }
         })
       }
@@ -136,19 +172,21 @@ export class CinemaPage implements OnInit {
     this.cinema = this.firestore.collection('cinema').valueChanges({idField: 'customId'}).pipe(take(1))
     this.cinema.forEach((r) => {
       r.forEach((r2) => {
-
+        r2.name = r2.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
         this.firestorage.ref(`cinemaImages/${r2.name.toLowerCase()}.jpeg`).getDownloadURL().forEach(r => {
           // console.log(r);
           r2.image = r;
-        }).catch(e => {
-          console.log('Aucune image pour : ', r2, 'ERROR :', e);
+        }).then(() => {
+          this.cinemaList.push({
+            name: r2.name,
+            address: r2.address,
+            movieList: this.getMovieByCinema(r2),
+            image: r2.image,
+            distance: r2.distance
+          });
         })
-        this.cinemaList.push({
-          name: r2.name,
-          address: r2.address,
-          movieList: this.getMovieByCinema(r2),
-          image: r2.image
-        });
+
+
 
         if(r2.address.fullAddress.includes('Paris')) {
           this.cinemaListParis.push(r2);
