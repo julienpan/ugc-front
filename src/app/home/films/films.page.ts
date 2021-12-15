@@ -190,6 +190,7 @@ export class FilmsPage implements OnInit {
 
 
   getAllGenre() {
+    console.log('GET ALL GENRE');
     this.genre = this.firestore.collection('genres').valueChanges();
     this.genre.forEach(r => {
       r.forEach(r2 => {
@@ -204,20 +205,40 @@ export class FilmsPage implements OnInit {
   }
 
   getUserPref() {
+    console.log('GET ALL PREF');
     this.user = this.firestore.collection('users').valueChanges();
     this.user.forEach(r => {
       r.forEach(r2 => {
         if(localStorage.getItem('user')) {
+          console.log('LOCAL STORAGE USER FOUND');
           if(localStorage.getItem('user').match(r2.email)) {
             // console.log(r2);
+            console.log('USER TROUVER', r2.email)
             r2.preferences.forEach(r3 => {
               this.prefList.push(r3);
+              console.log('LISTE DES PREFERENCES', this.prefList);
 
               this.movieList.forEach(r => {
                 r.genres.forEach(r2 => {
-                  if(r2.toLowerCase() == r3) {
-                    if(!this.recommendedMovieList.includes(r)) {
+                  if(r2.toLowerCase() == r3.toLowerCase()) {
+
+                    console.log('PREFERENCES ET FILM TROUVE', r);
+
+                    if(!this.recommendedMovieList.includes(r)) {            
+                      console.log(r);      
+                      this.firestorage.ref(`movieImages/${r.name.toLowerCase()}.jpeg`).getDownloadURL().forEach(r4 => {
+                        console.log(r4);
+                        this.recommendedMovieList.forEach(r5 => {
+                          console.log(r5);
+                          if(r5.name == r.name) {
+                            r5.image = r4;
+                          }
+                        })
+                      }).catch(e => {
+                        console.log('Aucune image pour : ', r, 'ERROR :', e);
+                      })
                       this.recommendedMovieList.push(r);
+                      console.log(this.recommendedMovieList);
                     }
                   }
                 })
@@ -242,7 +263,6 @@ export class FilmsPage implements OnInit {
         }).catch(e => {
           console.log('Aucune image pour : ', r2, 'ERROR :', e);
         })
-
         this.movieList.push({
           id: r2.customId,
           name: r2.name,
