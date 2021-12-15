@@ -10,7 +10,7 @@
   <ion-title>Tous les cinémas</ion-title>
   <ion-list>
     <ion-item lines="none" *ngFor="let cinema of cinemaList">
-      <ion-button style="width: 100%;"color="primary" slot="start">{{cinema.name}}</ion-button>
+      <ion-button style="width: 100%;"color="primary" slot="start" (click)="goToCinema(cinema)">{{cinema.name}}</ion-button>
       <!-- <ion-icon name="chevron-down" slot="end"></ion-icon> -->
       <!-- <ion-icon name="chevron-up" slot="end"></ion-icon> -->
     </ion-item>

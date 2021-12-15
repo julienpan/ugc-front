@@ -48,6 +48,16 @@ export class CinemaDetailPage implements OnInit {
       this.router.navigateByUrl('/home/accueil/cinema');
     }
 
+    if(!this.cinema.image) {
+      console.log('AUCUNE IMAGE');
+      this.cinema.name = this.cinema.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+      console.log(`cinemaImages/${this.cinema.name}.jpeg`);
+      this.firestorage.ref(`cinemaImages/${this.cinema.name}.jpeg`).getDownloadURL().forEach(r => {
+        this.cinema.image = r;
+      }).catch(e => {
+        console.log('Aucune image pour : ', this.cinema.name, 'ERROR :', e);
+      })
+    }
     this.getMovieByCinema();
     // console.log(this.cinema);
   }
@@ -69,7 +79,7 @@ export class CinemaDetailPage implements OnInit {
               console.log('Aucune image pour : ', r2, 'ERROR :', e);
             })
             if(!this.cinema.movieList.includes(r2.name) || !this.cinema.movieList.includes(r2)) {
-              console.log(r2);
+              // console.log(r2);
               this.cinema.movieList.push(r2);
             }
             // console.log('TROUVE', this.cinema.movieList);
@@ -78,7 +88,11 @@ export class CinemaDetailPage implements OnInit {
         })
       })
     })
-    console.log(this.cinema);
+    // console.log(this.cinema);
   } 
+
+  watchTrailer(link) {
+    window.open(link, "_blank");
+  }
 
 }

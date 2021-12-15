@@ -26,14 +26,14 @@
 
   <ion-grid>
 
-    <div id="section" *ngIf="cinema.movieList.length > 0">
+    <div id="section">
       <ion-item lines="none" color="primary">
         <ion-text>Les films proposées</ion-text>
         <ion-button slot="end" fill="clear" color="light">Tout voir</ion-button>
       </ion-item>
     </div>
 
-    <div id="newMovie" *ngIf="cinema.movieList.length > 0">
+    <div id="newMovie">
       <ion-slides [options]="slideOpts" pager="true">
         <ion-slide *ngFor="let movie of cinema.movieList">
           <div id="movie">

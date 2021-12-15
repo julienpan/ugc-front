@@ -1,6 +1,6 @@
-import { Component, HostListener, NgZone, OnInit } from '@angular/core';
+import { Component, HostListener, NgZone, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { ModalController } from '@ionic/angular';
+import { IonSlides, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { ModalAddMoviePage } from 'src/app/components/modal-add-movie/modal-add-movie.page';
 import { ModalCinemaPage } from 'src/app/components/modal-cinema/modal-cinema.page';
@@ -80,6 +80,14 @@ export class FilmsPage implements OnInit {
     zipCode: ''
   }
 
+  @ViewChild("mySlides") slides: IonSlides;
+  @ViewChild("mySlides2") slides2: IonSlides;
+  @ViewChild("mySlides3") slides3: IonSlides;
+  @ViewChild("mySlides4") slides4: IonSlides;
+  @ViewChild("mySlides5") slides5: IonSlides;
+
+
+
 
   constructor(
     private modalCtrl: ModalController,
@@ -91,6 +99,14 @@ export class FilmsPage implements OnInit {
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
   ) { }
+
+  // slide(index) {
+  //   this.slides.slideTo(index)
+  // }
+
+  slide(event) {
+    console.log(event);
+  }
 
   ngOnInit() {
 
@@ -110,13 +126,13 @@ export class FilmsPage implements OnInit {
 
     this.innerWidth = window.innerWidth;
     if(this.innerWidth <= 500) {
-      this.slideOpts.slidesPerView = 1.3;
+      this.slideOpts.slidesPerView = 1.1;
     } else if(this.innerWidth > 500 && this.innerWidth <= 700) {
-      this.slideOpts.slidesPerView = 2.5;
+      this.slideOpts.slidesPerView = 1.5;
     } else if(this.innerWidth > 700 && this.innerWidth <= 1000) {
-      this.slideOpts.slidesPerView = 3.5;
+      this.slideOpts.slidesPerView = 2.5;
     } else {
-      this.slideOpts.slidesPerView = 4.5;
+      this.slideOpts.slidesPerView = 3.5;
     }
     this.getAllMovies();
     this.getAllGenre();
@@ -243,9 +259,8 @@ export class FilmsPage implements OnInit {
             this.previewMovieList.push(r2);
           } else if(r== 'EN-AVANT') {
             this.frontMovieList.push(r2);
-          } else {
-            this.basicMovieList.push(r2);
           }
+          this.basicMovieList.push(r2);
         })
       
       });

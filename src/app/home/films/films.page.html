@@ -56,9 +56,17 @@
       </ion-item>
     </div>
 
-    <div id="newMovie" *ngIf="recommendedMovieList.length > 0">
-      <ion-slides [options]="slideOpts" pager="true">
-        <ion-slide *ngFor="let movie of recommendedMovieList">
+    <div id="newMovie" *ngIf="recommendedMovieList.length > 3">
+      <ion-slides [options]="slideOpts" pager="true" #mySlides style="    margin-left: 50px;
+    margin-right: 50px;">
+        <ion-slide *ngFor="let movie of recommendedMovieList; let index = index">
+          <ion-icon class="nav-img-forward" size="large" color="primary" name="arrow-forward"
+            *ngIf="recommendedMovieList.length > index + 1" (click)="slide(index + 1)">
+          </ion-icon>
+          <ion-icon class="nav-img-back" size="large" color="primary" name="arrow-back"
+            *ngIf="index != 0 && recommendedMovieList.length > index" (click)="slide(index - 1)">
+          </ion-icon>
+        
           <div id="movie">
             <div id="image">
               <img id="movieImage" [src]="movie.image" alt="">
@@ -77,7 +85,24 @@
             </div>
           </div>
         </ion-slide>
-      </ion-slides>
+      </ion-slides>    
+
+      <ion-icon *ngIf="recommendedMovieList.length > 3" style="position: relative;
+        z-index: 10;
+        border-radius: 20px;
+        box-shadow: 0px 0px 2px grey;
+        background: #08288b;
+        bottom: 240px;
+        left: 95%;" name="arrow-forward" size="large" color="light" (click)="slides.slideNext()"></ion-icon>
+    
+          <ion-icon *ngIf="recommendedMovieList.length > 3" style="position: relative;
+          z-index: 10;
+          border-radius: 20px;
+          box-shadow: 0px 0px 2px grey;
+          background: #08288b;
+          bottom: 240px;
+          left: -25px;" name="arrow-back" size="large" color="light" (click)="slides.slidePrev()"></ion-icon>
+
     </div>
 
 
@@ -90,8 +115,10 @@
     </div>
 
     <div id="newMovie">
-      <ion-slides [options]="slideOpts" pager="true">
-        <ion-slide *ngFor="let movie of newMovieList">
+
+      <ion-slides [options]="slideOpts" pager="true" #mySlides2 style="    margin-left: 50px;
+    margin-right: 50px;">
+        <ion-slide *ngFor="let movie of newMovieList; let index = index">
           <div id="movie">
             <div id="image">
               <img id="movieImage" [src]="movie.image" alt="">
@@ -111,8 +138,23 @@
           </div>
         </ion-slide>
       </ion-slides>
-    </div>
 
+      <ion-icon *ngIf="newMovieList.length > 3" style="position: relative;
+    z-index: 10;
+    border-radius: 20px;
+    box-shadow: 0px 0px 2px grey;
+    background: #08288b;
+    bottom: 240px;
+    left: 95%;" name="arrow-forward" size="large" color="light" (click)="slides2.slideNext()"></ion-icon>
+
+      <ion-icon *ngIf="newMovieList.length > 3" style="position: relative;
+      z-index: 10;
+      border-radius: 20px;
+      box-shadow: 0px 0px 2px grey;
+      background: #08288b;
+      bottom: 240px;
+      left: -25px;" name="arrow-back" size="large" color="light" (click)="slides2.slidePrev()"></ion-icon>
+    </div>
 
 
     <div id="section">
@@ -123,8 +165,9 @@
     </div>
 
     <div id="newMovie">
-      <ion-slides [options]="slideOpts" pager="true">
-        <ion-slide *ngFor="let movie of frontMovieList">
+      <ion-slides [options]="slideOpts" pager="true" #mySlides3 style="    margin-left: 50px;
+    margin-right: 50px;">
+        <ion-slide *ngFor="let movie of frontMovieList; let index = index">
           <div id="movie">
             <div id="image">
               <img id="movieImage" [src]="movie.image" alt="">
@@ -144,6 +187,21 @@
           </div>
         </ion-slide>
       </ion-slides>
+      <ion-icon *ngIf="frontMovieList.length > 3" style="position: relative;
+        z-index: 10;
+        border-radius: 20px;
+        box-shadow: 0px 0px 2px grey;
+        background: #08288b;
+        bottom: 240px;
+        left: 95%;" name="arrow-forward" size="large" color="light" (click)="slides3.slideNext()"></ion-icon>
+    
+          <ion-icon *ngIf="frontMovieList.length > 3" style="position: relative;
+          z-index: 10;
+          border-radius: 20px;
+          box-shadow: 0px 0px 2px grey;
+          background: #08288b;
+          bottom: 240px;
+          left: -25px;" name="arrow-back" size="large" color="light" (click)="slides3.slidePrev()"></ion-icon>
     </div>
 
     <div id="section">
@@ -154,8 +212,9 @@
     </div>
 
     <div id="newMovie">
-      <ion-slides [options]="slideOpts" pager="true">
-        <ion-slide *ngFor="let movie of previewMovieList">
+      <ion-slides [options]="slideOpts" pager="true" #mySlides4 style="    margin-left: 50px;
+    margin-right: 50px;">
+        <ion-slide *ngFor="let movie of previewMovieList; let index = index">
           <div id="movie">
             <div id="image">
               <img id="movieImage" [src]="movie.image" alt="">
@@ -175,6 +234,23 @@
           </div>
         </ion-slide>
       </ion-slides>
+
+      <ion-icon *ngIf="previewMovieList.length > 3" style="position: relative;
+        z-index: 10;
+        border-radius: 20px;
+        box-shadow: 0px 0px 2px grey;
+        background: #08288b;
+        bottom: 240px;
+        left: 95%;" name="arrow-forward" size="large" color="light" (click)="slides4.slideNext()"></ion-icon>
+    
+          <ion-icon *ngIf="previewMovieList.length > 3" style="position: relative;
+          z-index: 10;
+          border-radius: 20px;
+          box-shadow: 0px 0px 2px grey;
+          background: #08288b;
+          bottom: 240px;
+          left: -25px;" name="arrow-back" size="large" color="light" (click)="slides4.slidePrev()"></ion-icon>
+
     </div>
 
     <div id="section">
@@ -185,8 +261,9 @@
     </div>
 
     <div id="newMovie">
-      <ion-slides [options]="slideOpts" pager="true">
-        <ion-slide *ngFor="let movie of basicMovieList">
+      <ion-slides [options]="slideOpts" pager="true" #mySlides5 style="    margin-left: 50px;
+    margin-right: 50px;">
+        <ion-slide *ngFor="let movie of basicMovieList; let index = index">
           <div id="movie">
             <div id="image">
               <img id="movieImage" [src]="movie.image" alt="">
@@ -206,6 +283,23 @@
           </div>
         </ion-slide>
       </ion-slides>
+
+      <ion-icon *ngIf="basicMovieList.length > 3" style="position: relative;
+        z-index: 10;
+        border-radius: 20px;
+        box-shadow: 0px 0px 2px grey;
+        background: #08288b;
+        bottom: 240px;
+        left: 95%;" name="arrow-forward" size="large" color="light" (click)="slides5.slideNext()"></ion-icon>
+    
+          <ion-icon *ngIf="basicMovieList.length > 3" style="position: relative;
+          z-index: 10;
+          border-radius: 20px;
+          box-shadow: 0px 0px 2px grey;
+          background: #08288b;
+          bottom: 240px;
+          left: -25px;" name="arrow-back" size="large" color="light" (click)="slides5.slidePrev()"></ion-icon>
+
     </div>
 
 

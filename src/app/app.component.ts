@@ -11,7 +11,9 @@ import { FirebaseService } from './services/firebase.service';
 })
 export class AppComponent implements OnInit {
   public appPages = [
-    { title: 'Accueil', url: '/home/accueil', icon: 'home' },
+    { title: 'Films', url: '/home/accueil/films', icon: 'film' },
+    { title: 'Cinéma', url: '/home/accueil/cinema', icon: 'videocam' },
+
     { title: 'News', url: '/home/news', icon: 'newspaper' },
     // { title: 'Connexion', url: '/home/login', icon: 'person' },
     // { title: 'Inscription', url: '/home/register', icon: 'person' },
