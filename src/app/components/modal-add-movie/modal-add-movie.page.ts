@@ -140,17 +140,17 @@ export class ModalAddMoviePage implements OnInit {
         if (url) {
           this.fb = url;
         }
-      console.log(this.fb);
+        console.log(this.fb);
       });
     })).subscribe(url => {
       if (url) {
         console.log(url);
       }
     });
-
     if(this.valid == true) {
       this.movieForm.releaseDate = this.movieForm.releaseDate.substring(8, 10) + '/' + this.movieForm.releaseDate.substring(5, 7) + '/' + this.movieForm.releaseDate.substring(0, 4);
       const movieRef = this.firestore.collection('movie');
+
       movieRef.doc(this.movieForm.name).set({
         name: this.movieForm.name,
         releaseDate: this.movieForm.releaseDate,

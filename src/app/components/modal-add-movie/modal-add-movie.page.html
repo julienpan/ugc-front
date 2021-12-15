@@ -38,7 +38,7 @@
 
     <ion-item>
       <ion-label position="floating">La durée</ion-label>
-      <ion-datetime [min]="minTime" [max]="maxTime" pickerFormat="HH:mm" displayFormat="HH:mm" placeholder="Selectionner la durée" [(ngModel)]="currentDate" (ionChange)="onSelectDuration($event)"></ion-datetime>
+      <ion-datetime [min]="minTime" pickerFormat="HH:mm" displayFormat="HH:mm" placeholder="Selectionner la durée" [(ngModel)]="currentDate" (ionChange)="onSelectDuration($event)"></ion-datetime>
     </ion-item>
 
     <!-- <ion-item>

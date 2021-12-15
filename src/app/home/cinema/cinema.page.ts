@@ -18,6 +18,7 @@ import { ModalAddCinemaPage } from 'src/app/components/modal-add-cinema/modal-ad
 import { AdminService } from 'src/app/services/admin.service';
 import { take } from 'rxjs/operators';
 import { AgmCoreModule, MapsAPILoader } from "@agm/core";
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Component({
   selector: 'app-cinema',
@@ -50,8 +51,8 @@ export class CinemaPage implements OnInit {
   cinemaList = [
     {
       name: '',
-      image: '',
       movieList: [],
+      image: '',
       address: {
         fullAddress: '',
         street: '',
@@ -84,6 +85,7 @@ export class CinemaPage implements OnInit {
     private modalCtrl: ModalController,
     private adminService: AdminService,
     private mapsAPILoader: MapsAPILoader,
+    private firestorage: AngularFireStorage
     ) {}
 
   ngOnInit() {
@@ -130,15 +132,23 @@ export class CinemaPage implements OnInit {
   }
 
   getAllCinema() {
+
     this.cinema = this.firestore.collection('cinema').valueChanges({idField: 'customId'}).pipe(take(1))
     this.cinema.forEach((r) => {
       r.forEach((r2) => {
+        // console.log(r2.name.toLowerCase());
+        this.firestorage.ref(`cinemaImages/${r2.name.toLowerCase()}.jpeg`).getDownloadURL().forEach(r => {
+          // console.log(r);
+          r2.image = r;
+        }).catch(e => {
+          console.log('Aucune image pour : ', r2, 'ERROR :', e);
+        })
 
         this.cinemaList.push({
           name: r2.name,
           address: r2.address,
-          image: r2.image,
           movieList: this.getMovieByCinema(r2),
+          image: r2.image
         });
 
         if(r2.address.fullAddress.includes('Paris')) {
