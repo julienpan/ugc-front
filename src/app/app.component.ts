@@ -13,6 +13,8 @@ export class AppComponent implements OnInit {
   public appPages = [
     { title: 'Films', url: '/home/accueil/films', icon: 'film' },
     { title: 'Cinéma', url: '/home/accueil/cinema', icon: 'videocam' },
+    { title: 'News', url: '/news', icon: 'newspaper' },
+
   ];
 
   isLoggedIn : boolean = false;
