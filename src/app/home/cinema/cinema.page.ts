@@ -126,44 +126,52 @@ export class CinemaPage implements OnInit {
 
     this.getAllCinema();
 
-    if(this.isAround == true) {
-      this.segmentForm = 'AROUND';
-      this.calculateDistance(this.cinemaList);
-    }
+    // if(this.isAround == true) {
+    //   console.log('IS AROUND : ', this.cinemaList);
+    //   this.segmentForm = "AROUND";
+    //   this.calculateDistance();
+    // }
+
+    // if(this.isAround == true) {
+    //   this.segmentForm = 'AROUND';
+    //   this.calculateDistance(this.cinemaList);
+    // }
     console.log(this.isAround, this.latitude, this.longitude);
   }
 
-  calculateDistance(cinemaList) {
-    cinemaList.forEach(r => {
+  calculateDistance() {
+    this.cinemaList.forEach(r => {
+      console.log(r);
       if(r.address.latitude != 0 && r.address.longitude != 0) {
-
+        console.log('ITEM TROUVE:', r);
         this.mapsAPILoader.load().then(() => {
+          console.log('MAPS API LOADER');
           const location1 = new google.maps.LatLng(r.address.latitude, r.address.longitude);
           const location2 = new google.maps.LatLng(this.latitude, this.longitude);
           let distance = google.maps.geometry.spherical.computeDistanceBetween(location1, location2);
           distance = distance / 1000;
-          // console.log('NAME : ', r.name, 'DISTANCE : ', distance.toFixed(1));
+          console.log('NAME : ', r.name, 'DISTANCE : ', distance.toFixed(1));
           if(parseFloat(distance.toFixed(1)) <= 30.0) {
             // console.log(r);
-            this.cinemaListAround.push(r);
-            console.log(this.cinemaListAround);
-            // this.cinemaListAround.push({
-            //   name: r.name,
-            //   movieList: r.movieList,
-            //   image: r.image,
-            //   distance: distance.toFixed(1),
-            //   address: {
-            //     fullAddress: r.address.fullAddress,
-            //     street: r.address.street,
-            //     street_2: r.address.street_2,
-            //     city: r.address.city,
-            //     country: r.address.country,
-            //     zipCode: r.address.zipCode,
-            //     latitude: r.address.latitude,
-            //     longitude: r.address.longitude,
-            //   }
-            // });
+            // this.cinemaListAround.push(r);
+            this.cinemaListAround.push({
+              name: r.name,
+              movieList: r.movieList,
+              image: r.image,
+              distance: distance.toFixed(1),
+              address: {
+                fullAddress: r.address.fullAddress,
+                street: r.address.street,
+                street_2: r.address.street_2,
+                city: r.address.city,
+                country: r.address.country,
+                zipCode: r.address.zipCode,
+                latitude: r.address.latitude,
+                longitude: r.address.longitude,
+              }
+            });
             // this.cinemaListAround.shift();
+            console.log(this.cinemaListAround);
           }
         })
       }
@@ -185,6 +193,8 @@ export class CinemaPage implements OnInit {
             image: r2.image,
             distance: r2.distance
           });
+          this.calculateDistance();
+          
         })
         if(r2.address.fullAddress.includes('Paris')) {
           this.cinemaListParis.push(r2);
@@ -198,13 +208,9 @@ export class CinemaPage implements OnInit {
           this.cinemaListToulouse.push(r2);
         }
       });
-    }).then(() => {
-      if(this.isAround == true) {
-        console.log('IS AROUND : ', this.cinemaList);
-        this.calculateDistance(this.cinemaList);
-      }
     })
     this.cinemaList.pop();
+    // this.calculateDistance();
   }
 
   getMovieByCinema(cinema) : any[] {

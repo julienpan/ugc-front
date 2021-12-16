@@ -74,17 +74,16 @@ export class FilmsPage implements OnInit {
 
   errorForm = '';
 
-  addressForm : AddressForm;
-  // = {
-  //   city: '',
-  //   country: '',
-  //   fullAddress: '',
-  //   latitude: 0,
-  //   longitude: 0,
-  //   street: '',
-  //   street_2: '',
-  //   zipCode: ''
-  // }
+  addressForm = {
+    city: '',
+    country: '',
+    fullAddress: '',
+    latitude: 0,
+    longitude: 0,
+    street: '',
+    street_2: '',
+    zipCode: ''
+  }
 
   @ViewChild("mySlides") slides: IonSlides;
   @ViewChild("mySlides2") slides2: IonSlides;
